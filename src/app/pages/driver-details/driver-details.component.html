@@ -1,0 +1,432 @@
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<p-toast></p-toast>
+
+<div class="grid mt-2">
+	<div class="col-12">
+        <p-panel header="Driver Info">
+            <ng-template pTemplate="icons">
+                <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog">
+                </button> -->
+                <p-selectButton [options]="infoOptions" [(ngModel)]="isInfo" optionLabel="label" optionValue="value"></p-selectButton>
+                <!-- <p-toggleButton class="pr-2" [(ngModel)]="isInfo" onLabel="Info" offLabel="Edit" onIcon="pi pi-eye" offIcon="pi pi-user-edit" [style]="{'width': '5em'}"></p-toggleButton> -->
+            </ng-template>
+
+            <div *ngIf="isInfo" >
+                <div class="formgrid grid">
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Employee Code: </strong>
+                        </label>
+                        <label for="firstname2">{{driverInfo.EmpCode}}</label>
+                    </div>
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Driver Code: </strong>
+                        </label>
+                        <label for="firstname2">{{driverInfo.DriverCode}}</label>
+                    </div>
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Driver Name(English): </strong>
+                        </label>
+                        <label for="firstname2">{{driverInfo.DriverName}}</label>
+                    </div>
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Driver Name(Arabic): </strong>
+                        </label>
+                        <label for="firstname2">{{driverInfo.DriverNameAr}}</label>
+                    </div>
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Tel No: </strong>
+                        </label>
+                        <label for="firstname2">{{driverInfo.DriverTelNo}}</label>
+                    </div>
+                    <div class="col-6 flex align-items-center mb-4">
+                        <label for="firstname2" class="mr-2 text-lg font-bold">
+                            <strong>Is Active: </strong>
+                        </label>
+                        <p-tag *ngIf="driverInfo.IsActive === 'Y'" severity="success" value="Active"></p-tag>
+                        <p-tag *ngIf="driverInfo.IsActive === 'N'" severity="danger" value="Not Active"></p-tag>
+                    </div>
+
+                </div>
+            </div>
+
+            <div *ngIf="!isInfo" >
+                <form [formGroup]="driverForm">
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="firstname2">Employee Code</label>
+                            <input formControlName="newEmpCode" [ngModel]="driverInfo.EmpCode" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        </div>
+                        <div class="field col-6">
+                            <label for="lastname2">Driver Code</label>
+                            <input formControlName="newDriverCode" [ngModel]="driverInfo.DriverCode" type="number" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        </div>
+                        <div class="field col-6">
+                            <label for="firstname2">Driver Name(English)</label>
+                            <input formControlName="driverName" [ngModel]="driverInfo.DriverName" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        </div>
+                        <div class="field col-6">
+                            <label for="lastname2">Driver Name(Arabic)</label>
+                            <input formControlName="driverNameAr" [ngModel]="driverInfo.DriverNameAr" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        </div>
+                        <div class="field col-6">
+                            <label for="firstname2">Tel No</label>
+                            <input formControlName="telNo" [ngModel]="driverInfo.DriverTelNo" type="number" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        </div>
+                        <div class="field col-6">
+                            <label for="lastname2">Is Active</label>
+                            <div class="flex">
+                                <div class="field-radiobutton px-2">
+                                    <p-radioButton name="city" formControlName="isActive" value="Y" name="isActive" id="active" [(ngModel)]="driverInfo.IsActive"></p-radioButton>
+                                    <label for="city1">Active</label>
+                                </div>
+                                <div class="field-radiobutton px-2">
+                                    <p-radioButton name="city" formControlName="isActive" value="N" name="isActive" id="active" [(ngModel)]="driverInfo.IsActive"></p-radioButton>
+                                    <label for="city2">Not Active</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-6">
+                            <button pButton type="button" label="Update" class="p-button-success"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </p-panel>
+
+        <!-- List View -->
+        <div class="mt-4">
+            <p-tabView>
+                <!-- Pending Orders -->
+                <p-tabPanel header="Pending Orders" leftIcon="pi pi-shopping-cart">
+                    <!-- Filter -->
+                    <p-accordion>
+                        <p-accordionTab header="Filter" [selected]="false">
+                            <div class="formgrid grid">
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery No</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">SO. No</label>
+                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery Location</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">From Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    <!-- <p-calendar></p-calendar> -->
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">To Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-12 flex justify-content-center">
+                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
+                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                    <!-- Filter -->
+
+                    <div *ngIf="!pendingOrdersLoaded"  class="col-12 custom-skeleton p-4">
+                        <div class="flex mb-3">
+                            <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                            <div>
+                                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton height=".5rem"></p-skeleton>
+                            </div>
+                        </div>
+                        <p-skeleton width="100%" height="150px"></p-skeleton>
+                        <div class="flex justify-content-between mt-3">
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                        </div>
+                    </div>
+
+                    <p-dataView *ngIf="pendingOrdersLoaded" #dv [value]="pendingOrders" [paginator]="true" [rows]="9" filterBy="DeliveryNo" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+                        <ng-template pTemplate="header">
+
+                            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input type="search" pInputText placeholder="Search by Delivery No" (input)="onFilter(dv, $event)">
+                                </span>
+                                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="listItem">
+                            <div class="col-12">
+                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
+                                    <i class="pi pi-shopping-cart text-yellow-500" style="font-size: 4rem;"></i>
+                                    <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                        <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
+                                    </div>
+                                    <!-- <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+
+                                        <p-button icon="pi pi-info-circle" styleClass="mb-2 p-button-rounded p-button-lg p-button-warning"></p-button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="gridItem">
+
+                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                                <div class="my-3 surface-border">
+                                    <div class="flex flex-column align-items-center text-center mb-3">
+                                        <i class="pi pi-shopping-cart text-yellow-500" style="font-size: 4rem;"></i>
+                                        <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" class="w-9 shadow-2 my-3 mx-0"/> -->
+                                        <div class="text-lg font-bold">{{order.DeliveryNo}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+
+                </p-tabPanel>
+                <!-- Pending Orders -->
+
+                <!-- Picked Orders -->
+                <p-tabPanel header="Picked Orders" leftIcon="pi pi-cart-plus">
+                    <!-- Filter -->
+                    <p-accordion>
+                        <p-accordionTab header="Filter" [selected]="false">
+                            <div class="formgrid grid">
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery No</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">SO. No</label>
+                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery Location</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">From Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    <!-- <p-calendar></p-calendar> -->
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">To Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-12 flex justify-content-center">
+                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
+                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                    <!-- Filter -->
+
+                    <div *ngIf="!receivedOrdersLoaded"  class="col-12 custom-skeleton p-4">
+                        <div class="flex mb-3">
+                            <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                            <div>
+                                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton height=".5rem"></p-skeleton>
+                            </div>
+                        </div>
+                        <p-skeleton width="100%" height="150px"></p-skeleton>
+                        <div class="flex justify-content-between mt-3">
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                        </div>
+                    </div>
+
+                    <p-dataView *ngIf="receivedOrdersLoaded" #dv [value]="receivedOrders" [paginator]="true" [rows]="9" filterBy="DeliveryNo" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+                        <ng-template pTemplate="header">
+
+                            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input type="search" pInputText placeholder="Search by Delivery No" (input)="onFilter(dv, $event)">
+                                </span>
+                                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="listItem">
+                            <div class="col-12">
+                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
+                                    <i class="pi pi-shopping-cart text-orange-500" style="font-size: 4rem;"></i>
+                                    <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                        <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
+                                    </div>
+                                    <!-- <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                                        <p-button icon="pi pi-info-circle" styleClass="mb-2 p-button-rounded p-button-lg p-button-warning"></p-button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="gridItem">
+
+                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                                <div class="my-3 surface-border">
+                                    <div class="flex flex-column align-items-center text-center mb-3">
+                                        <i class="pi pi-shopping-cart text-orange-500" style="font-size: 4rem;"></i>
+                                        <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" class="w-9 shadow-2 my-3 mx-0"/> -->
+                                        <div class="text-lg font-bold">{{order.DeliveryNo}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                    </p-dataView>
+                </p-tabPanel>
+                <!-- Picked Orders -->
+
+                <!-- Delivered Orders -->
+                <p-tabPanel header="Delivered Orders" leftIcon="pi pi-map-marker">
+
+                    <!-- Filter -->
+                    <p-accordion>
+                        <p-accordionTab header="Filter" [selected]="false">
+                            <div class="formgrid grid">
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery No</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">SO. No</label>
+                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="firstname2">Delivery Location</label>
+                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">From Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    <!-- <p-calendar></p-calendar> -->
+                                </div>
+                                <div class="field col-3">
+                                    <label for="lastname2">To Date</label>
+                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                </div>
+                                <div class="field col-12 flex justify-content-center">
+                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
+                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                    <!-- Filter -->
+
+                    <div *ngIf="!deliveredOrdersLoaded"  class="col-12 custom-skeleton p-4">
+                        <div class="flex mb-3">
+                            <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                            <div>
+                                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                                <p-skeleton height=".5rem"></p-skeleton>
+                            </div>
+                        </div>
+                        <p-skeleton width="100%" height="150px"></p-skeleton>
+                        <div class="flex justify-content-between mt-3">
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                        </div>
+                    </div>
+
+                    <p-dataView *ngIf="deliveredOrdersLoaded" #dv [value]="deliveredOrders" [paginator]="true" [rows]="9" filterBy="DeliveryNo" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+
+                        <!-- Filter -->
+                        <p-accordion>
+                            <p-accordionTab header="Filter" [selected]="false">
+                                <div class="formgrid grid">
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery No</label>
+                                        <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">SO. No</label>
+                                        <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery Location</label>
+                                        <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">From Date</label>
+                                        <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                        <!-- <p-calendar></p-calendar> -->
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">To Date</label>
+                                        <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-12 flex justify-content-center">
+                                        <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
+                                        <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                        <!-- Filter -->
+
+                        <ng-template pTemplate="header">
+
+                            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input type="search" pInputText placeholder="Search by Delivery No" (input)="onFilter(dv, $event)">
+                                </span>
+                                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="listItem">
+                            <div class="col-12">
+                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center hover:bg-gray-100 cursor-pointer p-3 w-full">
+                                    <i class="pi pi-shopping-cart text-green-500" style="font-size: 4rem;"></i>
+                                    <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                        <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
+                                    </div>
+                                    <!-- <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                                        <p-button icon="pi pi-info-circle" styleClass="mb-2 p-button-rounded p-button-lg p-button-warning"></p-button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template let-order pTemplate="gridItem">
+
+                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                                <div class="my-3 surface-border">
+                                    <div class="flex flex-column align-items-center text-center mb-3">
+                                        <i class="pi pi-shopping-cart text-green-500" style="font-size: 4rem;"></i>
+                                        <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" class="w-9 shadow-2 my-3 mx-0"/> -->
+                                        <div class="text-lg font-bold text-black">{{order.DeliveryNo}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+                </p-tabPanel>
+                <!-- Delivered Orders -->
+
+            </p-tabView>
+        </div>
+        <!-- List View -->
+
+    </div>
+</div>
+

@@ -1,0 +1,44 @@
+<p-toast></p-toast>
+
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/layout/images/logo.png" alt="logo">
+        <span>DIGITECH DELIVERY</span>
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu flex" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <!-- <button class="p-link layout-topbar-button">
+            <i class="pi pi-calendar"></i>
+            <span>Calendar</span>
+        </button> -->
+
+        <form [formGroup]="searchForm">
+            <div class="p-inputgroup">
+                <button (click)="searchSoNumber()" type="button" class="p-button-warning" pButton pRipple label="Search"></button>
+                <input (keyup.enter)="searchSoNumber()" type="text" formControlName="search" pInputText placeholder="S.O Number">
+            </div>
+        </form>
+        <p-progressSpinner *ngIf="!soNoLoaded"  [style]="{width: '20px', height: '20px'}" class="align-self-center pl-2" styleClass="custom-spinner" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+        <!-- <span class="p-input-icon-right p-inputgroup">
+            <i class="pi pi-spin pi-spinner"></i>
+            <input type="text" pInputText>
+        </span> -->
+
+        <button class="p-link layout-topbar-button">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+        </button>
+        <button (click)="logout()" class="p-link layout-topbar-button">
+            <i class="pi pi-sign-out"></i>
+            <span>Logout</span>
+        </button>
+    </div>
+</div>

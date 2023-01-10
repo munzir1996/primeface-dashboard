@@ -1,0 +1,156 @@
+
+<div>
+    <div class="formgrid grid">
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Planned Delivery Date: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.DeliveryDate | date: 'dd/MM/yyyy'}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Customer Phone: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.CustomerPhone}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Sales Order: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.InvoiceNo}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Customer Address : </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.CustomerAddress}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Customer Name: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.CustomerName}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Internal Audit Phone: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.InternalAuditPhone}}</label>
+        </div>
+
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Driver Name: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.DriverName}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Driver Phone: </strong>
+            </label>
+            <label for="firstname2">{{orderInfo.DriverPhone}}</label>
+        </div>
+
+    </div>
+</div>
+
+<p-tabView>
+    <p-tabPanel header="Order Items" leftIcon="pi pi-shopping-cart">
+        <p-table [value]="orderInfo.OrderDetails" responsiveLayout="scroll" [paginator]="true" [rows]="10" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="ItemCode">Item Code <p-sortIcon field="ItemCode"></p-sortIcon></th>
+                    <th pSortableColumn="ItemDesc">Item Desc <p-sortIcon field="ItemDesc"></p-sortIcon></th>
+                    <th pSortableColumn="ItemQty">Item Qty <p-sortIcon field="ItemQty"></p-sortIcon></th>
+                    <th pSortableColumn="Received">Received <p-sortIcon field="Received"></p-sortIcon></th>
+                    <th pSortableColumn="ReceivedItemsQty">Received Qty <p-sortIcon field="ReceivedItemsQty"></p-sortIcon></th>
+                    <th pSortableColumn="Received_Date">Received Date <p-sortIcon field="Received_Date"></p-sortIcon></th>
+                    <th pSortableColumn="Delivered">Delivered <p-sortIcon field="Delivered"></p-sortIcon></th>
+                    <th pSortableColumn="DeliveredItemsQty">Delivered Qty <p-sortIcon field="DeliveredItemsQty"></p-sortIcon></th>
+                    <th pSortableColumn="Delivered_Date">Delivered Date <p-sortIcon field="Delivered_Date"></p-sortIcon></th>
+                    <th pSortableColumn="Returned">Returned <p-sortIcon field="Returned"></p-sortIcon></th>
+                    <th pSortableColumn="ReturnedItemQty">Returned Qty <p-sortIcon field="ReturnedItemQty"></p-sortIcon></th>
+                    <th pSortableColumn="Returned_Date">Return Date <p-sortIcon field="Returned_Date"></p-sortIcon></th>
+                    <th pSortableColumn="ReasonCodeEN">Return Reason <p-sortIcon field="ReasonCodeEN"></p-sortIcon></th>
+                    <th style="width:4em"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-OrderDetail>
+                <tr>
+                    <td>{{OrderDetail.ItemCode}}</td>
+                    <td>{{OrderDetail.ItemDesc}}</td>
+                    <td>{{OrderDetail.ItemQty}}</td>
+                    <td>
+                        <p-tag *ngIf="OrderDetail.Received == 'Y'" styleClass="mr-2" severity="success" value="Received" [rounded]="true"></p-tag>
+                        <p-tag *ngIf="OrderDetail.Received == 'N'" styleClass="mr-2" severity="warning" value="Not yet" [rounded]="true"></p-tag>
+                    </td>
+                    <td>{{OrderDetail.ReceivedItemsQty}}</td>
+                    <td>{{OrderDetail.Received_Date}}</td>
+                    <td>
+                        <p-tag *ngIf="OrderDetail.Delivered == 'Y'" styleClass="mr-2" severity="success" value="Delivered" [rounded]="true"></p-tag>
+                        <p-tag *ngIf="OrderDetail.Delivered == 'N'" styleClass="mr-2" severity="warning" value="Not yet" [rounded]="true"></p-tag>
+                    </td>
+                    <td>{{OrderDetail.DeliveredItemsQty}}</td>
+                    <td>{{OrderDetail.Delivered_Date}}</td>
+                    <td>
+                        <p-tag *ngIf="OrderDetail.Returned == 'Y'" styleClass="mr-2" severity="success" value="Returned" [rounded]="true"></p-tag>
+                        <p-tag *ngIf="OrderDetail.Returned == 'N'" styleClass="mr-2" severity="warning" value="Not yet" [rounded]="true"></p-tag>
+                    </td>
+                    <td>{{OrderDetail.ReturnedItemQty}}</td>
+                    <td>{{OrderDetail.Returned_Date}}</td>
+                    <td>{{OrderDetail.ReasonCodeEN}}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Order Documents" leftIcon="pi pi-camera">
+        <div class="grid">
+            <!-- Delivery Note -->
+            <p-card class="col-4" header="Delivery Note">
+                <p-image *ngIf="orderInfo.OrderImage != ''" [preview]="true" [src]="apiImage + orderInfo.OrderImage" alt="Image" width="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+                <p-image *ngIf="orderInfo.OrderImage == ''" [preview]="true" src="../../../assets/layout/images/logo.png" alt="Image" width="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+            </p-card>
+            <!-- Customer ID -->
+            <p-card class="col-4" header="Customer ID">
+                <p-image *ngIf="orderInfo.CustomerIdImage != ''" [preview]="true" [src]="apiImage + orderInfo.CustomerIdImage" alt="Image" width="250" height="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+                <p-image *ngIf="orderInfo.CustomerIdImage == ''" [preview]="true" src="../../../assets/layout/images/logo.png" alt="Image" width="250" height="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+            </p-card>
+            <p-card class="col-4" header="Customer Signature">
+                <p-image *ngIf="orderInfo.CustomerSignature != ''" [preview]="true" [src]="apiImage + orderInfo.CustomerSignature" alt="Image" width="250" height="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+                <p-image *ngIf="orderInfo.CustomerSignature == ''" [preview]="true" src="../../../assets/layout/images/logo.png" alt="Image" width="250" height="250">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-eye"></i>
+                    </ng-template>
+                </p-image>
+            </p-card>
+        </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Map" leftIcon="pi pi-map-marker">
+        map
+    </p-tabPanel>
+</p-tabView>
+
+
