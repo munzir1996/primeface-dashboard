@@ -1,3 +1,4 @@
+import { EditDriverRequestModel } from './../../requests/EditDriver/EditDriverRequestModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
 import { AppService } from './../../utils/services/app.service';
@@ -75,7 +76,6 @@ export class DriverDetailsComponent implements OnInit {
     driverForm!: FormGroup;
 
     isEdit: boolean = false;
-    orders: Product[] = [];
 
     ////////////////
     sortOrder: number = 0;
@@ -118,8 +118,6 @@ export class DriverDetailsComponent implements OnInit {
         ];
 
         this.home = {icon: 'pi pi-home', routerLink: '/'};
-        // this.ordersLoaded = true;
-        // this.productService.getProducts().then(data => this.orders = data);
 
         this.driverForm = this.formBuilder.group({
             newDriverCode: new FormControl('', Validators.required),
@@ -206,25 +204,6 @@ export class DriverDetailsComponent implements OnInit {
             this.getDriverReceivedOrders(this.driverInfo.DriverCode, this.receivedFromDate, this.receivedToDate, this.receivedSoNo == null ? "" : this.receivedSoNo, this.receivedDeliveryNo == null ? "" : this.receivedDeliveryNo, this.receivedDeliveryLocation == null ? "" : this.receivedDeliveryLocation);
             this.getDriverDeliveredOrders(this.driverInfo.DriverCode, this.deliveredFromDate, this.deliveredToDate, this.deliveredSoNo == null ? "" : this.deliveredSoNo, this.deliveredDeliveryNo == null ? "" : this.deliveredDeliveryNo, this.deliveredDeliveryLocation == null ? "" : this.deliveredDeliveryLocation);
         }
-    }
-
-    show() {
-        this.ref = this.dialogService.open(OrderDetailsModalComponent, {
-            header: 'Delivery No #01KNID-2022005196',
-            width: '70%',
-            maximizable: true,
-            // contentStyle: {"max-height": "500px", "overflow": "auto"},
-            // baseZIndex: 10000
-        });
-
-        this.ref.onClose.subscribe((product: Product) =>{
-            if (product) {
-                this.messageService.add({severity:'info', summary: 'Product Selected', detail: product.name});
-            }
-        });
-        this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
-        });
     }
 
     filterPendingOrders() {
@@ -370,18 +349,53 @@ export class DriverDetailsComponent implements OnInit {
     }
 
     openPendingOrderDetails(order: OrderInfo) {
-        // document.getElementById('openModalButton').click();
 
-        // const modalRef = this.modalService.open(OrderDetailsModalComponent, { size: 'xl', scrollable: true });
-        // modalRef.componentInstance.orderInfo = order;
+        this.ref = this.dialogService.open(OrderDetailsModalComponent, {
+            data: {
+                orderInfo: order,
+            },
+            header: 'Delivery No#' + order.DeliveryNo,
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onMaximize.subscribe((value: any) => {
+            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+        });
     }
     openReceivedOrderDetails(order: OrderInfo) {
-        // const modalRef = this.modalService.open(OrderDetailsModalComponent, { size: 'xl', scrollable: true });
-        // modalRef.componentInstance.orderInfo = order;
+        this.ref = this.dialogService.open(OrderDetailsModalComponent, {
+            data: {
+                orderInfo: order,
+            },
+            header: 'Delivery No#' + order.DeliveryNo,
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onMaximize.subscribe((value: any) => {
+            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+        });
     }
     openDeliveredOrderDetails(order: OrderInfo) {
-        // const modalRef = this.modalService.open(OrderDetailsModalComponent, { size: 'xl', scrollable: true });
-        // modalRef.componentInstance.orderInfo = order;
+        this.ref = this.dialogService.open(OrderDetailsModalComponent, {
+            data: {
+                orderInfo: order,
+            },
+            header: 'Delivery No#' + order.DeliveryNo,
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onMaximize.subscribe((value: any) => {
+            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+        });
     }
 
     ngOnDestroy() {
@@ -394,56 +408,52 @@ export class DriverDetailsComponent implements OnInit {
         dv.filter((event.target as HTMLInputElement).value);
     }
 
-    // async editDriver(empCode, driverCode) {
+    async editDriver(empCode: string, driverCode: string) {
 
-    //     if (this.driverForm.valid) {
+        if (this.driverForm.valid) {
 
-    //       this.loading = true;
+          this.loading = true;
 
-    //       let editDriverRequestModel = new EditDriverRequestModel;
-    //       editDriverRequestModel.newDriverCode = this.driverForm.get('newDriverCode').value;
-    //       editDriverRequestModel.driverCode = driverCode;
-    //       editDriverRequestModel.newEmpCode = this.driverForm.get('newEmpCode').value;
-    //       editDriverRequestModel.empCode = empCode;
-    //       editDriverRequestModel.driverName = this.driverForm.get('driverName').value;
-    //       editDriverRequestModel.driverNameAr = this.driverForm.get('driverNameAr').value;
-    //       editDriverRequestModel.telNo = this.driverForm.get('telNo').value;
-    //       editDriverRequestModel.isActive = this.driverForm.get('isActive').value;
+          let editDriverRequestModel = new EditDriverRequestModel;
+          editDriverRequestModel.newDriverCode = this.driverForm.get('newDriverCode')!.value;
+          editDriverRequestModel.driverCode = driverCode;
+          editDriverRequestModel.newEmpCode = this.driverForm.get('newEmpCode')!.value;
+          editDriverRequestModel.empCode = empCode;
+          editDriverRequestModel.driverName = this.driverForm.get('driverName')!.value;
+          editDriverRequestModel.driverNameAr = this.driverForm.get('driverNameAr')!.value;
+          editDriverRequestModel.telNo = this.driverForm.get('telNo')!.value;
+          editDriverRequestModel.isActive = this.driverForm.get('isActive')!.value;
 
-    //       this.digiDeliveryApi.EditDriver(editDriverRequestModel).subscribe(async response => {
+          this.digiDeliveryApi.EditDriver(editDriverRequestModel).subscribe({
+            next: (response) => {
+                if (response.Error.ErrorCode == "200") {
 
-    //         if (response.Error.ErrorCode == "200") {
+                    this.driverInfo.DriverCode = response.driverCode;
+                    this.driverInfo.EmpCode = response.empCode;
+                    this.driverInfo.DriverName = response.driverName;
+                    this.driverInfo.DriverNameAr = response.driverNameAr;
+                    this.driverInfo.DriverTelNo = response.telNo;
+                    this.driverInfo.IsActive = response.isActive;
 
-    //           this.driverInfo.DriverCode = response.driverCode;
-    //           this.driverInfo.EmpCode = response.empCode;
-    //           this.driverInfo.DriverName = response.driverName;
-    //           this.driverInfo.DriverNameAr = response.driverNameAr;
-    //           this.driverInfo.DriverTelNo = response.telNo;
-    //           this.driverInfo.IsActive = response.isActive;
+                    this.messageService.add({severity:'success', summary: 'Edit Driver Request', detail: 'Driver Edited:'+ response.driverName, life: 3000});
+                    // this.driverForm.reset();
+                } else {
 
-    //           this.loading = false;
+                    this.messageService.add({severity:'error', summary: 'Edit Driver Request', detail: response.Error.ErrorMessage, life: 3000});
+                    // this.errorMessageAddDriver = response.Error.ErrorMessage;
+                }
+            },
+            error: (error) => {
+                this.messageService.add({severity:'error', summary: 'Edit Driver Request', detail: 'Connection Error', life: 3000});
+            },
+            complete: () => {
+                this.loading = false;
+            },
+        });
+        } else {
+            this.messageService.add({severity:'error', summary: 'Edit Driver Request', detail: 'Please fill All Fields', life: 3000});
+        }
 
-    //           this.toastr.success('Edit Driver Request', 'Driver Edited:'+ response.driverName);
-    //           // this.driverForm.reset();
-    //         } else {
-
-    //           this.loading = false;
-
-    //           this.toastr.error('Edit Driver Request', response.Error.ErrorMessage);
-    //           // this.errorMessageAddDriver = response.Error.ErrorMessage;
-
-    //         }
-    //       }, async error => {
-
-    //         this.loading = false;
-
-    //         this.toastr.error('Edit Driver Request', 'Connection Error');
-
-    //       });
-    //     } else {
-    //       this.toastr.info('Edit Driver Request', 'Please fill All Fields', { positionClass: 'toast-top-right',timeOut :  2000  });
-    //     }
-
-    // }
+    }
 
 }

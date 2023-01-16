@@ -49,6 +49,10 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { LoginComponent } from './pages/auth/login/login.component';
 import {PasswordModule} from 'primeng/password';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+
+registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
@@ -91,8 +95,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService, DatePipe
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent, DatePipe]
 })
 export class AppModule { }

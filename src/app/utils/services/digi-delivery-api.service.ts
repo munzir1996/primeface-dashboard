@@ -1,3 +1,7 @@
+import { GetSalesOrdersResponseModel } from './../../requests/GetSalesOrders/GetSalesOrdersResponseModel';
+import { GetSalesOrdersRequestModel } from './../../requests/GetSalesOrders/GetSalesOrdersRequestModel';
+import { EditDriverResponseModel } from './../../requests/EditDriver/EditDriverResponseModel';
+import { EditDriverRequestModel } from './../../requests/EditDriver/EditDriverRequestModel';
 import { GetDriverDeliveredOrdersResponseModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersResponseModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { GetDriversResponseModel } from '../../models/GetDrivers/GetDriversResponseModel';
@@ -101,6 +105,27 @@ export class DigiDeliveryApiService {
     public GetPendingOrders(req: GetDriverDeliveredOrdersRequestModel): Observable<GetDriverDeliveredOrdersResponseModel> {
         return this.http.post<GetDriverDeliveredOrdersResponseModel>(
           apiURL + 'MgmtReports/GetDriversPendingOrders',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public EditDriver(req: EditDriverRequestModel): Observable<EditDriverResponseModel> {
+
+        return this.http.post<EditDriverResponseModel>(
+          apiURL + 'MgmtReports/EditDriver',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public GetSalesOrders(req: GetSalesOrdersRequestModel): Observable<GetSalesOrdersResponseModel> {
+        return this.http.post<GetSalesOrdersResponseModel>(
+          apiURL + 'DeliveryRequest/GetSalesOrderRequests',
           JSON.stringify(req),
           {
             headers: this.httpOptions

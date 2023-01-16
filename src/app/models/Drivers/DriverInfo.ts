@@ -5,4 +5,4 @@ export class DriverInfo {
     DriverNameAr!: string;
     DriverTelNo!: string;
     IsActive!: string;
-  }
+}

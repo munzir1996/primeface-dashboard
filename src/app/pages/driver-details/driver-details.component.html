@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="field col-6">
-                            <button pButton type="button" label="Update" class="p-button-success"></button>
+                            <button pButton type="button" label="Update" class="p-button-success" (click)="editDriver(driverInfo.EmpCode , driverInfo.DriverCode)"></button>
                         </div>
                     </div>
                 </form>
@@ -102,38 +102,41 @@
         <!-- List View -->
         <div class="mt-4">
             <p-tabView>
+
                 <!-- Pending Orders -->
                 <p-tabPanel header="Pending Orders" leftIcon="pi pi-shopping-cart">
                     <!-- Filter -->
                     <p-accordion>
                         <p-accordionTab header="Filter" [selected]="false">
-                            <div class="formgrid grid">
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery No</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <form [formGroup]="filterPendingOrdersForm">
+                                <div class="formgrid grid">
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery No</label>
+                                        <input formControlName="pendingDeliveryNo" [(ngModel)]="pendingDeliveryNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">SO. No</label>
+                                        <input formControlName="pendingSoNo" [(ngModel)]="pendingSoNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery Location</label>
+                                        <input formControlName="pendingDeliveryLocation" [(ngModel)]="pendingDeliveryLocation" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">From Date</label>
+                                        <input formControlName="pendingFromDate" [(ngModel)]="pendingFromDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                        <!-- <p-calendar></p-calendar> -->
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">To Date</label>
+                                        <input formControlName="pendingToDate" [(ngModel)]="pendingToDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-12 flex justify-content-center">
+                                        <button pButton type="button" label="Search" class="mx-2 p-button-warning" (click)="filterPendingOrders()"></button>
+                                        <button pButton type="button" label="Clear" class="mx-2 p-button-secondary" (click)="clearFilterPendingOrders()"></button>
+                                    </div>
                                 </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">SO. No</label>
-                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery Location</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">From Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                    <!-- <p-calendar></p-calendar> -->
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">To Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-12 flex justify-content-center">
-                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
-                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
-                                </div>
-                            </div>
+                            </form>
                         </p-accordionTab>
                     </p-accordion>
                     <!-- Filter -->
@@ -168,7 +171,7 @@
 
                         <ng-template let-order pTemplate="listItem">
                             <div class="col-12">
-                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
+                                <div (click)="openPendingOrderDetails(order)" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
                                     <i class="pi pi-shopping-cart text-yellow-500" style="font-size: 4rem;"></i>
                                     <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
                                         <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
@@ -183,7 +186,7 @@
 
                         <ng-template let-order pTemplate="gridItem">
 
-                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                            <div (click)="openPendingOrderDetails(order)" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
                                 <div class="my-3 surface-border">
                                     <div class="flex flex-column align-items-center text-center mb-3">
                                         <i class="pi pi-shopping-cart text-yellow-500" style="font-size: 4rem;"></i>
@@ -203,33 +206,35 @@
                     <!-- Filter -->
                     <p-accordion>
                         <p-accordionTab header="Filter" [selected]="false">
-                            <div class="formgrid grid">
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery No</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <form [formGroup]="filterReceivedOrdersForm">
+                                <div class="formgrid grid">
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery No</label>
+                                        <input formControlName="receivedDeliveryNo" [(ngModel)]="receivedDeliveryNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">SO. No</label>
+                                        <input formControlName="receivedSoNo" [(ngModel)]="receivedSoNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery Location</label>
+                                        <input formControlName="receivedDeliveryLocation" [(ngModel)]="receivedDeliveryLocation" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">From Date</label>
+                                        <input formControlName="receivedFromDate" [(ngModel)]="receivedFromDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                        <!-- <p-calendar></p-calendar> -->
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">To Date</label>
+                                        <input formControlName="receivedToDate" [(ngModel)]="receivedToDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-12 flex justify-content-center">
+                                        <button pButton type="button" label="Search" class="mx-2 p-button-warning" (click)="filterReceivedOrders()"></button>
+                                        <button pButton type="button" label="Clear" class="mx-2 p-button-secondary" (click)="clearFilterReceivedOrders()"></button>
+                                    </div>
                                 </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">SO. No</label>
-                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery Location</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">From Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                    <!-- <p-calendar></p-calendar> -->
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">To Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-12 flex justify-content-center">
-                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
-                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
-                                </div>
-                            </div>
+                            </form>
                         </p-accordionTab>
                     </p-accordion>
                     <!-- Filter -->
@@ -264,7 +269,7 @@
 
                         <ng-template let-order pTemplate="listItem">
                             <div class="col-12">
-                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
+                                <div (click)="openReceivedOrderDetails(order)" class="flex flex-column md:flex-row align-items-center p-3 w-full hover:bg-gray-100 cursor-pointer">
                                     <i class="pi pi-shopping-cart text-orange-500" style="font-size: 4rem;"></i>
                                     <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
                                         <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
@@ -278,7 +283,7 @@
 
                         <ng-template let-order pTemplate="gridItem">
 
-                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                            <div (click)="openReceivedOrderDetails(order)" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
                                 <div class="my-3 surface-border">
                                     <div class="flex flex-column align-items-center text-center mb-3">
                                         <i class="pi pi-shopping-cart text-orange-500" style="font-size: 4rem;"></i>
@@ -299,33 +304,35 @@
                     <!-- Filter -->
                     <p-accordion>
                         <p-accordionTab header="Filter" [selected]="false">
-                            <div class="formgrid grid">
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery No</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <form [formGroup]="filterDeliveredOrdersForm">
+                                <div class="formgrid grid">
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery No</label>
+                                        <input formControlName="deliveredDeliveryNo" [(ngModel)]="deliveredDeliveryNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">SO. No</label>
+                                        <input formControlName="deliveredSoNo" [(ngModel)]="deliveredSoNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="firstname2">Delivery Location</label>
+                                        <input formControlName="deliveredDeliveryLocation" [(ngModel)]="deliveredDeliveryLocation" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">From Date</label>
+                                        <input formControlName="deliveredFromDate" [(ngModel)]="deliveredFromDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                        <!-- <p-calendar></p-calendar> -->
+                                    </div>
+                                    <div class="field col-3">
+                                        <label for="lastname2">To Date</label>
+                                        <input formControlName="deliveredToDate" [(ngModel)]="deliveredToDate" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                    </div>
+                                    <div class="field col-12 flex justify-content-center">
+                                        <button pButton type="button" label="Search" class="mx-2 p-button-warning" (click)="filterDeliveredOrders()"></button>
+                                        <button pButton type="button" label="Clear" class="mx-2 p-button-secondary" (click)="clearFilterDeliveredOrders()"></button>
+                                    </div>
                                 </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">SO. No</label>
-                                    <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="firstname2">Delivery Location</label>
-                                    <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">From Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                    <!-- <p-calendar></p-calendar> -->
-                                </div>
-                                <div class="field col-3">
-                                    <label for="lastname2">To Date</label>
-                                    <input id="firstname2" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-                                </div>
-                                <div class="field col-12 flex justify-content-center">
-                                    <button pButton type="button" label="Search" class="mx-2 p-button-warning"></button>
-                                    <button pButton type="button" label="Clear" class="mx-2 p-button-secondary"></button>
-                                </div>
-                            </div>
+                            </form>
                         </p-accordionTab>
                     </p-accordion>
                     <!-- Filter -->
@@ -395,7 +402,7 @@
 
                         <ng-template let-order pTemplate="listItem">
                             <div class="col-12">
-                                <div (click)="show()" class="flex flex-column md:flex-row align-items-center hover:bg-gray-100 cursor-pointer p-3 w-full">
+                                <div (click)="openDeliveredOrderDetails(order)" class="flex flex-column md:flex-row align-items-center hover:bg-gray-100 cursor-pointer p-3 w-full">
                                     <i class="pi pi-shopping-cart text-green-500" style="font-size: 4rem;"></i>
                                     <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
                                         <div class="font-bold text-2xl">{{order.DeliveryNo}}</div>
@@ -409,7 +416,7 @@
 
                         <ng-template let-order pTemplate="gridItem">
 
-                            <div (click)="show()" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
+                            <div (click)="openDeliveredOrderDetails(order)" class="col-12 md:col-4 my-3 hover:bg-gray-100 cursor-pointer">
                                 <div class="my-3 surface-border">
                                     <div class="flex flex-column align-items-center text-center mb-3">
                                         <i class="pi pi-shopping-cart text-green-500" style="font-size: 4rem;"></i>
