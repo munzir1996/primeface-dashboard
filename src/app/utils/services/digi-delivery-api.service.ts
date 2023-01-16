@@ -112,6 +112,16 @@ export class DigiDeliveryApiService {
             timeout(timeOutTime));
     }
 
+    public GetReturnedOrders(req: GetDriverDeliveredOrdersRequestModel): Observable<GetDriverDeliveredOrdersResponseModel> {
+        return this.http.post<GetDriverDeliveredOrdersResponseModel>(
+          apiURL + 'MgmtReports/GetDriverReturnedOrders',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
+            timeout(timeOutTime));
+    }
+
     public EditDriver(req: EditDriverRequestModel): Observable<EditDriverResponseModel> {
 
         return this.http.post<EditDriverResponseModel>(
