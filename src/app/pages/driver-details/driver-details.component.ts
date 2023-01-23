@@ -1,3 +1,4 @@
+import { LocationModel } from './../../models/locations/LocationModel';
 import { EditDriverRequestModel } from './../../requests/EditDriver/EditDriverRequestModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
@@ -86,6 +87,7 @@ export class DriverDetailsComponent implements OnInit {
     ref!: DynamicDialogRef;
     items!: MenuItem[];
     home!: MenuItem;
+    locations!: LocationModel[];
 
     constructor(
         private productService: ProductService,
@@ -101,6 +103,11 @@ export class DriverDetailsComponent implements OnInit {
         this.infoOptions = [
             { label: 'Info', value: true },
             { label: 'Edit', value: false },
+        ];
+
+        this.locations = [
+            {name: 'KN3', code: '01KN3'},
+            {name: 'KNON', code: '01KNON'},
         ];
 
         if (this.router.getCurrentNavigation()!.extras != null) {

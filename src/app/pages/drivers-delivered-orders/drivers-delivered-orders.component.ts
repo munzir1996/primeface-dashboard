@@ -1,3 +1,4 @@
+import { LocationModel } from './../../models/locations/LocationModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { DatePipe } from '@angular/common';
 import { AppService } from './../../utils/services/app.service';
@@ -66,6 +67,7 @@ export class DriversDeliveredOrdersComponent implements OnInit {
     sortOrder: number = 0;
     sortField: string = '';
     ordersLoaded: boolean = false;
+    locations!: LocationModel[];
 
     ref!: DynamicDialogRef;
 
@@ -79,7 +81,12 @@ export class DriversDeliveredOrdersComponent implements OnInit {
         private formBuilder: FormBuilder,
         private appService: AppService,
         private datePipe: DatePipe
-    ) { }
+    ) {
+        this.locations = [
+            {name: 'KN3', code: '01KN3'},
+            {name: 'KNON', code: '01KNON'},
+        ];
+    }
 
     ngOnInit(): void {
         this.items = [
@@ -161,6 +168,7 @@ export class DriversDeliveredOrdersComponent implements OnInit {
             next: (response) => {
                 if (response.Error.ErrorCode == "200") {
                     this.deliveredOrders = response.Orders;
+                    this.messageService.add({severity:'success', summary: 'Driver Delivered Orders', detail: response.Error.ErrorMessage, life: 3000});
                     // this.deliveredOrdersLoaded = true;
                     // this.noDeliveredOrders = this.deliveredOrders.length > 0 ? true : false;
 
@@ -197,9 +205,6 @@ export class DriversDeliveredOrdersComponent implements OnInit {
             // baseZIndex: 10000
         });
 
-        this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
-        });
     }
 
     filterByDriver() {

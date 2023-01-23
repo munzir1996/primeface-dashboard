@@ -1,3 +1,4 @@
+import { LocationModel } from './../../models/locations/LocationModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
 import { AppService } from './../../utils/services/app.service';
@@ -61,6 +62,7 @@ export class DriversPickedOrdersComponent implements OnInit {
     sortOrder: number = 0;
     sortField: string = '';
     ordersLoaded: boolean = false;
+    locations!: LocationModel[];
 
     ref!: DynamicDialogRef;
 
@@ -74,7 +76,12 @@ export class DriversPickedOrdersComponent implements OnInit {
         private formBuilder: FormBuilder,
         private appService: AppService,
         private datePipe: DatePipe
-    ) { }
+    ) {
+        this.locations = [
+            {name: 'KN3', code: '01KN3'},
+            {name: 'KNON', code: '01KNON'},
+        ];
+    }
 
     ngOnInit(): void {
         this.items = [
@@ -158,6 +165,7 @@ export class DriversPickedOrdersComponent implements OnInit {
 
                 if (response.Error.ErrorCode == "200") {
                     this.receivedOrders = response.Orders;
+                    this.messageService.add({severity:'success', summary: 'Driver Picked Orders', detail: response.Error.ErrorMessage, life: 3000});
                     // this.receivedOrdersLoaded = true;
                     // this.noReceivedOrders = this.receivedOrders.length > 0 ? true : false;
                 } else {
@@ -193,9 +201,9 @@ export class DriversPickedOrdersComponent implements OnInit {
             // baseZIndex: 10000
         });
 
-        this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
-        });
+        // this.ref.onMaximize.subscribe((value: any) => {
+        //     this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+        // });
     }
 
     filterByDriver() {

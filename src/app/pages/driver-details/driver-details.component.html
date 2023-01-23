@@ -120,7 +120,8 @@
                                     </div>
                                     <div class="field col-3">
                                         <label for="firstname2">Delivery Location</label>
-                                        <input formControlName="pendingDeliveryLocation" [(ngModel)]="pendingDeliveryLocation" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                                        <p-dropdown [options]="locations" formControlName="pendingDeliveryLocation" [(ngModel)]="pendingDeliveryLocation" optionLabel="name" optionValue="code"></p-dropdown>
+                                        <!-- <input formControlName="pendingDeliveryLocation" [(ngModel)]="pendingDeliveryLocation" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"> -->
                                     </div>
                                     <div class="field col-3">
                                         <label for="lastname2">From Date</label>

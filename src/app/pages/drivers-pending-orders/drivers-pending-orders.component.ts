@@ -1,3 +1,4 @@
+import { LocationModel } from './../../models/locations/LocationModel';
 import { GetDriverDeliveredOrdersRequestModel } from './../../requests/GetDriverDeliveredOrders/GetDriverDeliveredOrdersRequestModel';
 import { AppService } from './../../utils/services/app.service';
 import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
@@ -60,6 +61,7 @@ export class DriversPendingOrdersComponent implements OnInit {
     sortOrder: number = 0;
     sortField: string = '';
     ordersLoaded: boolean = false;
+    locations!: LocationModel[];
 
     ref!: DynamicDialogRef;
 
@@ -73,7 +75,12 @@ export class DriversPendingOrdersComponent implements OnInit {
         private formBuilder: FormBuilder,
         private appService: AppService,
         private datePipe: DatePipe
-    ) { }
+    ) {
+        this.locations = [
+            {name: 'KN3', code: '01KN3'},
+            {name: 'KNON', code: '01KNON'},
+        ];
+    }
 
     ngOnInit(): void {
         this.items = [
@@ -161,6 +168,7 @@ export class DriversPendingOrdersComponent implements OnInit {
                 if (response.Error.ErrorCode == "200") {
                     this.pendingOrders = response.Orders;
                     this.resetPendingOrders = this.pendingOrders
+                    this.messageService.add({severity:'success', summary: 'Pending for Delivery', detail: response.Error.ErrorMessage, life: 3000});
                     // this.pendingOrdersLoaded = true;
                     // this.noPendingOrders = this.pendingOrders.length > 0 ? true : false;
                 } else {
@@ -196,11 +204,6 @@ export class DriversPendingOrdersComponent implements OnInit {
             // baseZIndex: 10000
         });
 
-        this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
-        });
-        // const modalRef = this.modalService.open(OrderDetailsModalComponent, { size: 'xl', scrollable: true });
-        // modalRef.componentInstance.orderInfo = order;
     }
 
     filterByDriver() {

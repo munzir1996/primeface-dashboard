@@ -1,3 +1,12 @@
+import { CityModel } from './../../models/City/CityModel';
+import { RequestChannelModel } from './../../models/RequestChannel/RequestChannelModel';
+import { GetSalesOrdersRequestModel } from './../../requests/GetSalesOrders/GetSalesOrdersRequestModel';
+import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
+import { Router } from '@angular/router';
+import { AppService } from './../../utils/services/app.service';
+import { Observable } from 'rxjs';
+import { SalesOrderModel } from './../../models/SalesOrders/SalesOrderModel';
+import { LoginResponseModel } from './../../requests/Account/LoginResponseModel';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
@@ -13,10 +22,18 @@ import {MenuItem} from 'primeng/api';
 })
 export class SoPendingDeliveryRequestsComponent implements OnInit {
 
+    loginResponse!: LoginResponseModel;
+    salesOrdersResponse!: SalesOrderModel[];
+    salesOrders!: SalesOrderModel[];
+    total$!: Observable<number>;
+    isSalesOrdersLoaded!: boolean;
+    isRefreshSalesOrders!: boolean;
+    emojy: string = '&#x1F605';
+    requestChannels!: RequestChannelModel[];
+    cities!: CityModel[];
+    ///
     items!: MenuItem[];
     home!: MenuItem;
-    customers1: Customer[] = [];
-    representatives: Representative[] = [];
     statuses: any[] = [];
     activityValues: number[] = [0, 100];
     loading: boolean = true;
@@ -25,6 +42,10 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
 
     constructor(
         private customerService: CustomerService,
+        private digiDeliveryApiService: DigiDeliveryApiService,
+        public router: Router,
+        public appService: AppService,
+        public messageService: MessageService,
     ) { }
 
     ngOnInit(): void {
@@ -35,35 +56,65 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
 
         this.home = {icon: 'pi pi-home', routerLink: '/'};
 
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
+        //
+        this.loginResponse = this.appService.getUserInfo();
+        this.getSalesOrderRequests();
+        // this.customerService.getCustomersLarge().then(customers => {
+        //     this.customers1 = customers;
+        //     this.loading = false;
 
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
+        //     // @ts-ignore
+        //     this.customers1.forEach(customer => customer.date = new Date(customer.date));
+        // });
 
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' }
+        this.requestChannels = [
+            { name: 'E-commerce', value: 'E-commerce'},
+            { name: 'Region', value: 'Region'},
+            { name: 'Dist', value: 'Dist'},
+            { name: 'Retail', value: 'Retail'},
+            { name: 'Corp', value: 'Corp'},
+        ];
+
+        this.cities = [
+            { name: 'Khartoum', value: 'Khartoum' },
+            { name: 'Khartoum North', value: 'Khartoum North' },
+            { name: 'Omdurman', value: 'Omdurman' },
         ];
 
         this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
+            { name: 'Requested', value: 'N' },
+            { name: 'Dispatched', value: 'Y' },
         ];
+
+    }
+
+    getSalesOrderRequests() {
+        let salesOrdersRequest = new GetSalesOrdersRequestModel;
+        salesOrdersRequest.Status = "N";
+        salesOrdersRequest.EmpCode = this.loginResponse.UserInfo.EmpCode;
+
+        this.digiDeliveryApiService.GetSalesOrders(salesOrdersRequest).subscribe({
+            next: (response) => {
+                if (response.Error.ErrorCode == "200") {
+
+                    // this.salesOrdersResponse = response.salesOrders;
+                    this.salesOrders = response.salesOrders;
+                    this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: response.Error.ErrorMessage, life: 3000});
+
+                } else {
+                    this.isSalesOrdersLoaded = true;
+
+                    // this.toastr.error('Pending Delivery Orders', response.Error.ErrorMessage);
+                    this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: response.Error.ErrorMessage, life: 3000});
+                }
+            },
+            error: () => {
+                this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: 'Connection Error', life: 3000});
+            },
+            complete: () => {
+                    this.loading = false;
+            },
+        });
 
     }
 
