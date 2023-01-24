@@ -1,0 +1,130 @@
+
+<p-confirmPopup></p-confirmPopup>
+<p-toast></p-toast>
+
+<div>
+    <div class="formgrid grid">
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>S.O. Requested Date: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.RequiestDate | date: 'dd/MM/yyyy'}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>SO. No: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.SO_No}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Tel No: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.TelNo}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Customer Name: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.CustomerName}}</label>
+        </div>
+        <!--  -->
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Delivery Type: </strong>
+            </label>
+            <label *ngIf="salesOrders.Address != 'NA';else personal_pickup">Address</label>
+            <ng-template #personal_pickup>
+                <label>Personal Pickup</label>
+                <!-- <p id="personal_pickup" class="pl-2">Personal Pickup</p> -->
+            </ng-template>
+        </div>
+        <div *ngIf="salesOrders.Address != 'NA'" class="col-6" class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Address: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.Address}}</label>
+        </div>
+        <!--  -->
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>City: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.CityName}}</label>
+        </div>
+        <!--  -->
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Delivery Within: </strong>
+            </label>
+            <label *ngIf="salesOrders.DelivaryWithin != ''">{{salesOrders.DelivaryWithin}}</label>
+            <label *ngIf="salesOrders.DelivaryWithin == ''">N/A</label>
+        </div>
+        <!--  -->
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Requested By: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.CrName}}</label>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Requested Channel: </strong>
+            </label>
+            <label for="firstname2">{{salesOrders.RequiestChanale}}</label>
+        </div>
+        <!--  -->
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>Comment: </strong>
+            </label>
+            <label *ngIf="salesOrders.Comment != ''">{{salesOrders.Comment}}</label>
+            <label *ngIf="salesOrders.Comment == ''">N/A</label>
+        </div>
+        <!--  -->
+    </div>
+</div>
+
+<p-table [value]="orderInfo.OrderDetails" responsiveLayout="scroll" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="item_code">Item Code<p-sortIcon field="item_code"></p-sortIcon></th>
+            <th pSortableColumn="item_desc">Item Desc<p-sortIcon field="item_desc"></p-sortIcon></th>
+            <th pSortableColumn="qty">Qty<p-sortIcon field="qty"></p-sortIcon></th>
+            <!--  -->
+            <th pSortableColumn="delivered">Status<p-sortIcon field="Received"></p-sortIcon></th>
+            <!--  -->
+            <!--  -->
+            <th pSortableColumn="soi_sys_id">Dispatch<p-sortIcon field="soi_sys_id"></p-sortIcon></th>
+            <!--  -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-OrderDetail>
+        <tr>
+            <td>{{OrderDetail.item_code}}</td>
+            <td>{{OrderDetail.item_desc}}</td>
+            <td>{{OrderDetail.qty}}</td>
+            <td>
+                <p-tag *ngIf="OrderDetail.delivered == 'Y'" severity="success" value="Received" [rounded]="true"></p-tag>
+                <p-tag *ngIf="OrderDetail.delivered == 'N'" severity="warning" value="Not yet" [rounded]="true"></p-tag>
+            </td>
+            <td>
+                <div *ngIf="OrderDetail.delivered == 'N'">
+                    <p-checkbox name="soi_sys_id" [value]="OrderDetail.soi_sys_id" (onChange)="selectItem(OrderDetail.soi_sys_id, $event)" [(ngModel)]="selectedSoiSysId" [disabled]="OrderDetail.delivered == 'Y'"></p-checkbox>
+                </div>
+                <!-- {{OrderDetail.soi_sys_id}} -->
+            </td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex my-3">
+            <!-- <p-button (click)="closeModal()"  label="Cancel" styleClass="p-button-secondary mx-1"></p-button> -->
+            <p-button *ngIf="!salesOrderForm.valid"  [disabled]="!salesOrderForm.valid" label="Procced to Dispatch" styleClass="p-button-warning mx-1"></p-button>
+            <p-button *ngIf="salesOrderForm.valid" [loading]="proceedDeliveryLoaded" (click)="confirm($event)" [disabled]="!salesOrderForm.valid" label="Procced to Dispatch" styleClass="p-button-warning mx-1"></p-button>
+        </div>
+    </ng-template>
+</p-table>
+
+
+

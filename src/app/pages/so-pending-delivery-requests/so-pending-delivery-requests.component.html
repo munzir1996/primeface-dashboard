@@ -98,7 +98,7 @@
                                 <!-- <p-columnFilter type="text" field="CityName" display="menu" placeholder="Search by Requested By"></p-columnFilter> -->
                             </div>
                         </th>
-                        <th style="min-width: 12rem">
+                        <th style="min-width: 5rem">
                             <div pSortableColumn="Status" class="flex justify-content-between align-items-center">
                                 Status
                                 <p-sortIcon field="Status"></p-sortIcon>
@@ -218,7 +218,7 @@
                             <!-- <p-progressBar [value]="customer.activity" [showValue]="false" [style]="{'height': '0.5rem'}"></p-progressBar> -->
                         </td>
                         <td class="text-center">
-                            show
+                            <button pButton pRipple (click)="openShowPendingDeliveryOrderModal(salesOrder)" icon="pi pi-eye" class="p-button-rounded p-button-secondary"></button>
                             <!-- <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': customer.verified, 'false-icon pi-times-circle text-pink-500': !customer.verified}"></i> -->
                         </td>
                     </tr>

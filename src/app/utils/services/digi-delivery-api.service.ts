@@ -1,3 +1,5 @@
+import { GetUpdateSaleOrderDetailsResponseModel } from './../../requests/GetSalesOrders/GetUpdateSaleOrderDetailsResponseModel';
+import { UpdateSalesOrderRequestModel } from './../../requests/GetSalesOrders/UpdateSalesOrderRequestModel';
 import { GetSalesOrdersResponseModel } from './../../requests/GetSalesOrders/GetSalesOrdersResponseModel';
 import { GetSalesOrdersRequestModel } from './../../requests/GetSalesOrders/GetSalesOrdersRequestModel';
 import { EditDriverResponseModel } from './../../requests/EditDriver/EditDriverResponseModel';
@@ -140,6 +142,17 @@ export class DigiDeliveryApiService {
           {
             headers: this.httpOptions
           }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public UpdateSalesOrder(req: UpdateSalesOrderRequestModel): Observable<GetUpdateSaleOrderDetailsResponseModel> {
+
+        return this.http.post<GetUpdateSaleOrderDetailsResponseModel>(
+        apiURL + 'DeliveryRequest/UpdateSaleOrderDetails',
+        JSON.stringify(req),
+        {
+            headers: this.httpOptions
+        }).pipe(
             timeout(timeOutTime));
     }
 

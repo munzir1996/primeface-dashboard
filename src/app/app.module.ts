@@ -51,12 +51,16 @@ import {PasswordModule} from 'primeng/password';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
+import { SoPendingDeliveryModalComponent } from './modals/so-pending-delivery-modal/so-pending-delivery-modal.component';
+import {CheckboxModule} from 'primeng/checkbox';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import { SoDispatchedOrdersModalComponent } from './modals/so-dispatched-orders-modal/so-dispatched-orders-modal.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent
+        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent
     ],
     imports: [
         FormsModule,
@@ -91,6 +95,8 @@ registerLocaleData(localeEn, 'en-EN');
         ProgressBarModule,
         PasswordModule,
         ProgressSpinnerModule,
+        CheckboxModule,
+        ConfirmPopupModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

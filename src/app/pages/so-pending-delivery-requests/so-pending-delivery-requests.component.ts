@@ -1,3 +1,4 @@
+import { SoPendingDeliveryModalComponent } from './../../modals/so-pending-delivery-modal/so-pending-delivery-modal.component';
 import { CityModel } from './../../models/City/CityModel';
 import { RequestChannelModel } from './../../models/RequestChannel/RequestChannelModel';
 import { GetSalesOrdersRequestModel } from './../../requests/GetSalesOrders/GetSalesOrdersRequestModel';
@@ -13,12 +14,13 @@ import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {MenuItem} from 'primeng/api';
+import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-so-pending-delivery-requests',
   templateUrl: './so-pending-delivery-requests.component.html',
   styleUrls: ['./so-pending-delivery-requests.component.scss'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService, DialogService]
 })
 export class SoPendingDeliveryRequestsComponent implements OnInit {
 
@@ -37,6 +39,7 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
     statuses: any[] = [];
     activityValues: number[] = [0, 100];
     loading: boolean = true;
+    ref!: DynamicDialogRef;
 
     @ViewChild('filter') filter!: ElementRef;
 
@@ -46,6 +49,7 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
         public router: Router,
         public appService: AppService,
         public messageService: MessageService,
+        public dialogService: DialogService,
     ) { }
 
     ngOnInit(): void {
@@ -56,16 +60,8 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
 
         this.home = {icon: 'pi pi-home', routerLink: '/'};
 
-        //
         this.loginResponse = this.appService.getUserInfo();
         this.getSalesOrderRequests();
-        // this.customerService.getCustomersLarge().then(customers => {
-        //     this.customers1 = customers;
-        //     this.loading = false;
-
-        //     // @ts-ignore
-        //     this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        // });
 
         this.requestChannels = [
             { name: 'E-commerce', value: 'E-commerce'},
@@ -99,7 +95,7 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
 
                     // this.salesOrdersResponse = response.salesOrders;
                     this.salesOrders = response.salesOrders;
-                    this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: response.Error.ErrorMessage, life: 3000});
+                    this.messageService.add({severity:'success', summary: 'S.O Pending Delivery Requests', detail: response.Error.ErrorMessage, life: 3000});
 
                 } else {
                     this.isSalesOrdersLoaded = true;
@@ -116,6 +112,44 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
             },
         });
 
+    }
+
+    openShowPendingDeliveryOrderModal(salesOrdersResponse: any) {
+
+        this.ref = this.dialogService.open(SoPendingDeliveryModalComponent, {
+            data: {
+                salesOrders: salesOrdersResponse,
+                ref: this.ref,
+            },
+            header: 'S.O. Pending Delivery Requests Details',
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onClose.subscribe((data) => {
+            if (data == true) {
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['sopending/pending/delivery/requests']);
+                    // this.getSalesOrderRequests();
+                    // window.location.reload();
+                });
+            }
+        });
+
+        // const modalRef = this.modalService.open(PendingDeliveryOrdersShowModalComponent, { size: 'xl' , scrollable: true });
+        // modalRef.componentInstance.salesOrders = salesOrdersResponse;
+
+        // modalRef.result.then((result) => {
+
+        //   if (result == true) {
+        //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        //       this.router.navigate(['pendingDeliveryOrders']);
+        //     });
+        //   }
+
+        // });
     }
 
     onGlobalFilter(table: Table, event: Event) {

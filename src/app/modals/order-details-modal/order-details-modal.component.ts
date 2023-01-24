@@ -17,7 +17,6 @@ import { apiImage } from './../../../environments/environment'
 })
 export class OrderDetailsModalComponent implements OnInit {
 
-    products!: Product[];
     orderInfo!: OrderInfo;
     public apiImage = apiImage;
 
@@ -30,8 +29,8 @@ export class OrderDetailsModalComponent implements OnInit {
         this.orderInfo = this.config.data.orderInfo
     }
 
-    selectProduct(product: Product) {
-        this.ref.close(product);
-    }
+    // selectProduct(product: Product) {
+    //     this.ref.close(product);
+    // }
 
 }
