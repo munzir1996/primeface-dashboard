@@ -1,5 +1,6 @@
 export class CityModel {
-    name!: string;
-    value!: string;
+    Id!: string;
+    Name!: string;
+    NameAR!: string;
 }
 

@@ -56,7 +56,7 @@ export class AppMenuComponent implements OnInit {
                         { label: 'Drivers Picked Orders', icon: 'pi pi-fw pi-cart-plus', routerLink: ['/drivers/picked/orders'] },
                         { label: 'Drivers Delivered Orders', icon: 'pi pi-fw pi-map-marker', routerLink: ['/drivers/delivered/orders'] },
                         { label: 'Drivers Returned Orders', icon: 'pi pi-fw pi-sync', routerLink: ['/drivers/returned/orders'] },
-                        { label: 'S.O Request Delivery', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/sopending/pending/delivery/requests'] },
+                        { label: 'S.O Request Delivery', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/sorequest/delivery'] },
                     ]
                 },
             ];

@@ -1,3 +1,4 @@
+import { SoRequestDeliveryModalComponent } from './../../modals/so-request-delivery-modal/so-request-delivery-modal.component';
 import { SoDispatchedOrdersModalComponent } from './../../modals/so-dispatched-orders-modal/so-dispatched-orders-modal.component';
 import { SoPendingDeliveryModalComponent } from './../../modals/so-pending-delivery-modal/so-pending-delivery-modal.component';
 import { CityModel } from './../../models/City/CityModel';
@@ -16,30 +17,27 @@ import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {MenuItem} from 'primeng/api';
 import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-so-dispatched-orders',
-  templateUrl: './so-dispatched-orders.component.html',
-  styleUrls: ['./so-dispatched-orders.component.scss'],
+  selector: 'app-so-request-delivery',
+  templateUrl: './so-request-delivery.component.html',
+  styleUrls: ['./so-request-delivery.component.scss'],
   providers: [MessageService, DialogService]
 })
-export class SoDispatchedOrdersComponent implements OnInit {
+export class SoRequestDeliveryComponent implements OnInit {
 
-    requestChannels!: RequestChannelModel[];
-    cities: any[] = [];
     loginResponse!: LoginResponseModel;
     salesOrdersResponse!: SalesOrderModel[];
     salesOrders!: SalesOrderModel[];
-    filterSalesOrdersForm!: FormGroup;
+    total$!: Observable<number>;
     isSalesOrdersLoaded!: boolean;
     isRefreshSalesOrders!: boolean;
     emojy: string = '&#x1F605';
-    //
+    requestChannels!: RequestChannelModel[];
+    cities: any[] = [];
+    ///
     items!: MenuItem[];
     home!: MenuItem;
-    customers1: Customer[] = [];
-    representatives: Representative[] = [];
     statuses: any[] = [];
     activityValues: number[] = [0, 100];
     loading: boolean = true;
@@ -56,9 +54,8 @@ export class SoDispatchedOrdersComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-
         this.items = [
-            {label: 'S.O Dispatched Orders'},
+            {label: 'S.O Request Delivery'},
         ];
 
         this.home = {icon: 'pi pi-home', routerLink: '/'};
@@ -84,13 +81,12 @@ export class SoDispatchedOrdersComponent implements OnInit {
             { name: 'Requested', value: 'N' },
             { name: 'Dispatched', value: 'Y' },
         ];
-
     }
 
     getSalesOrderRequests() {
 
         let salesOrdersRequest = new GetSalesOrdersRequestModel;
-        salesOrdersRequest.Status = "Y";
+        salesOrdersRequest.Status = "";
         salesOrdersRequest.EmpCode = this.loginResponse.UserInfo.EmpCode;
         this.isSalesOrdersLoaded = false;
         this.isRefreshSalesOrders = false;
@@ -106,7 +102,6 @@ export class SoDispatchedOrdersComponent implements OnInit {
                 } else {
                     this.isSalesOrdersLoaded = true;
 
-                    // this.toastr.error('Pending Delivery Orders', response.Error.ErrorMessage);
                     this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: response.Error.ErrorMessage, life: 3000});
                 }
             },
@@ -114,8 +109,32 @@ export class SoDispatchedOrdersComponent implements OnInit {
                 this.messageService.add({severity:'error', summary: 'S.O Pending Delivery Requests', detail: 'Connection Error', life: 3000});
             },
             complete: () => {
-                    this.loading = false;
+                this.loading = false;
             },
+        });
+    }
+
+    async openCreateSalesOrderModal() {
+        this.ref = this.dialogService.open(SoRequestDeliveryModalComponent, {
+            data: {
+                // salesOrders: salesOrdersResponse,
+                ref: this.ref,
+            },
+            header: 'S.O. Request Delivery Create',
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onClose.subscribe((data) => {
+            if (data == true) {
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                    this.router.navigate(['sopending/pending/delivery/requests']);
+                    // this.getSalesOrderRequests();
+                    // window.location.reload();
+                });
+            }
         });
     }
 
@@ -125,14 +144,14 @@ export class SoDispatchedOrdersComponent implements OnInit {
                 salesOrders: salesOrders,
                 ref: this.ref,
             },
-            header: 'S.O. Pending Delivery Requests Details',
+            header: 'S.O Request Delivery Details',
             width: '70%',
             maximizable: true,
             // contentStyle: {"max-height": "500px", "overflow": "auto"},
             // baseZIndex: 10000
         });
-
     }
+
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }

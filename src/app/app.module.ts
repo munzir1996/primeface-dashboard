@@ -55,12 +55,17 @@ import { SoPendingDeliveryModalComponent } from './modals/so-pending-delivery-mo
 import {CheckboxModule} from 'primeng/checkbox';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import { SoDispatchedOrdersModalComponent } from './modals/so-dispatched-orders-modal/so-dispatched-orders-modal.component';
+import { SoRequestDeliveryComponent } from './pages/so-request-delivery/so-request-delivery.component';
+import { SoRequestDeliveryModalComponent } from './modals/so-request-delivery-modal/so-request-delivery-modal.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { AddDriverModalComponent } from './modals/add-driver-modal/add-driver-modal.component';
+import { GridAllModule } from '@syncfusion/ej2-angular-grids'; 
 
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent
+        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent, SoRequestDeliveryModalComponent, AddDriverModalComponent
     ],
     imports: [
         FormsModule,
@@ -97,6 +102,8 @@ registerLocaleData(localeEn, 'en-EN');
         ProgressSpinnerModule,
         CheckboxModule,
         ConfirmPopupModule,
+        InputTextareaModule,
+        GridAllModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

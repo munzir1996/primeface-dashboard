@@ -150,6 +150,11 @@
 
     <p-tabPanel header="Map" leftIcon="pi pi-map-marker">
         map
+        <ejs-maps id='rn-container' (load)="load($event)" style="display:block">
+            <e-layers>
+           <e-layer></e-layer>
+           </e-layers>
+        </ejs-maps>
     </p-tabPanel>
 </p-tabView>
 

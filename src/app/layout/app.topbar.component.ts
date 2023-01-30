@@ -25,6 +25,7 @@ export class AppTopBarComponent {
     soNoLoaded: boolean = true;
     errorMessageSoNo!: string;
     ref!: DynamicDialogRef;
+    visibleSidebar3!: boolean;
 
     @ViewChild('menubutton') menuButton!: ElementRef;
 

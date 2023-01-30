@@ -157,7 +157,7 @@ export class SoPendingDeliveryModalComponent implements OnInit {
                 this.proceedDeliverySaleOrder();
             },
             reject: () => {
-                this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+                this.messageService.add({severity:'info', summary:'Rejected', detail:'You have rejected'});
             }
         });
     }

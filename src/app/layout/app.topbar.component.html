@@ -1,4 +1,16 @@
 <p-toast></p-toast>
+<p-sidebar [(visible)]="visibleSidebar3" position="top" [baseZIndex]="10000">
+    <ng-template pTemplate="header">
+        <h5><strong>Emp Name:</strong>{{userInfo.UserInfo.EmpName}}</h5>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <label for=""><strong>Emp Code: </strong> {{userInfo.UserInfo.EmpCode}}</label>
+        <br>
+        <label for=""><strong>Emp Type: </strong> {{userInfo.UserInfo.EmpType}}</label>
+        <br>
+        <label for=""><strong>Emp Department: </strong> {{userInfo.UserInfo.EmpDepartment}}</label>
+    </ng-template>
+</p-sidebar>
 
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
@@ -32,7 +44,7 @@
             <input type="text" pInputText>
         </span> -->
 
-        <button class="p-link layout-topbar-button">
+        <button (click)="visibleSidebar3 = true" class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
             <span>Profile</span>
         </button>

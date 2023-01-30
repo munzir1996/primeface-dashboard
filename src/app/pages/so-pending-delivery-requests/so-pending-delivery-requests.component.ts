@@ -32,7 +32,7 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
     isRefreshSalesOrders!: boolean;
     emojy: string = '&#x1F605';
     requestChannels!: RequestChannelModel[];
-    cities!: CityModel[];
+    cities: any[] = [];
     ///
     items!: MenuItem[];
     home!: MenuItem;
@@ -44,7 +44,6 @@ export class SoPendingDeliveryRequestsComponent implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(
-        private customerService: CustomerService,
         private digiDeliveryApiService: DigiDeliveryApiService,
         public router: Router,
         public appService: AppService,

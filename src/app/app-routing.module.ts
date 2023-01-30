@@ -1,3 +1,4 @@
+import { SoRequestDeliveryComponent } from './pages/so-request-delivery/so-request-delivery.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { SoDispatchedOrdersComponent } from './pages/so-dispatched-orders/so-dispatched-orders.component';
 import { SoPendingDeliveryRequestsComponent } from './pages/so-pending-delivery-requests/so-pending-delivery-requests.component';
@@ -27,6 +28,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'drivers/returned/orders', component: DriversReturnedOrdersComponent, },
                     { path: 'sopending/pending/delivery/requests', component: SoPendingDeliveryRequestsComponent, },
                     { path: 'sodispatched/orders', component: SoDispatchedOrdersComponent, },
+                    { path: 'sorequest/delivery', component: SoRequestDeliveryComponent, },
                     // { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     // { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
                     // { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },

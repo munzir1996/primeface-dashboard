@@ -1,3 +1,4 @@
+import { AddDriverModalComponent } from './../../modals/add-driver-modal/add-driver-modal.component';
 import { AppService } from './../../utils/services/app.service';
 import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api.service';
 import { UserInfoModel } from './../../models/Common/UserInfoModel';
@@ -43,6 +44,7 @@ export class DriversComponent implements OnInit {
         private formBuilder: FormBuilder,
         private digiDeliveryApi: DigiDeliveryApiService,
         public messageService: MessageService,
+        public dialogService: DialogService,
         ) { }
 
     ngOnInit(): void {
@@ -91,6 +93,28 @@ export class DriversComponent implements OnInit {
     openDriverDetail(driver: DriverInfo) {
         this.router.navigate(['/driver/details'], {
             state: { driver: driver }
+        });
+    }
+
+    openAddDriverModal() {
+
+        this.ref = this.dialogService.open(AddDriverModalComponent, {
+            data: {
+                // salesOrders: salesOrdersResponse,
+                ref: this.ref,
+            },
+            header: 'Create Driver',
+            width: '70%',
+            maximizable: true,
+            // contentStyle: {"max-height": "500px", "overflow": "auto"},
+            // baseZIndex: 10000
+        });
+
+        this.ref.onClose.subscribe((data) => {
+            if (data) {
+                this.getDrivers();
+                this.messageService.add({severity:'success', summary: 'Add Driver Request', detail: 'Driver Added: '+ data.driverName + ' Password: ' + data.pass, life: 3000});
+            }
         });
     }
 }

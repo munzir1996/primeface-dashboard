@@ -1,3 +1,9 @@
+import { AddDriverResponseModel } from './../../requests/Driver/AddDriverResponseModel';
+import { AddDriverRequestModel } from './../../requests/Driver/AddDriverRequestModel';
+import { AddSalesOrderRequestModel } from './../../requests/GetSalesOrders/AddSalesOrderRequestModel';
+import { GetCitiesResponseModel } from 'src/app/requests/GetCities/GetCitiesResponseModel';
+import { GetSalesOrderBySoNoResponseModel } from './../../requests/GetSalesOrders/GetSalesOrderBySoNoResponseModel';
+import { GetSalesOrderBySoNoRequestModel } from './../../requests/GetSalesOrders/GetSalesOrderBySoNoRequestModel';
 import { GetUpdateSaleOrderDetailsResponseModel } from './../../requests/GetSalesOrders/GetUpdateSaleOrderDetailsResponseModel';
 import { UpdateSalesOrderRequestModel } from './../../requests/GetSalesOrders/UpdateSalesOrderRequestModel';
 import { GetSalesOrdersResponseModel } from './../../requests/GetSalesOrders/GetSalesOrdersResponseModel';
@@ -153,6 +159,45 @@ export class DigiDeliveryApiService {
         {
             headers: this.httpOptions
         }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public GetSalesOrderBySoNo(req: GetSalesOrderBySoNoRequestModel): Observable<GetSalesOrderBySoNoResponseModel> {
+        return this.http.post<GetSalesOrderBySoNoResponseModel>(
+          apiURL + 'DeliveryRequest/GetSalesOrderBySoNo',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public GetCities(): Observable<GetCitiesResponseModel> {
+        return this.http.get<GetCitiesResponseModel>(
+          apiURL + 'Common/GetAllCities',
+          {
+            headers: this.httpOptions
+          }).pipe(timeout(timeOutTime));
+    }
+    public AddSalesOrder(req: AddSalesOrderRequestModel): Observable<GetSalesOrderBySoNoResponseModel> {
+
+        return this.http.post<GetSalesOrderBySoNoResponseModel>(
+          apiURL + 'DeliveryRequest/AddSalesOrder',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
+            timeout(timeOutTime));
+    }
+
+    public AddDriver(req: AddDriverRequestModel): Observable<AddDriverResponseModel> {
+
+        return this.http.post<AddDriverResponseModel>(
+          apiURL + 'MgmtReports/AddDriver',
+          JSON.stringify(req),
+          {
+            headers: this.httpOptions
+          }).pipe(
             timeout(timeOutTime));
     }
 

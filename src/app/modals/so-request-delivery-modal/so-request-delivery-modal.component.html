@@ -1,0 +1,116 @@
+
+<p-confirmPopup></p-confirmPopup>
+<p-toast></p-toast>
+
+<div class="formgrid grid mt-1">
+    <div class="col-6 flex align-items-center mb-4">
+        <form [formGroup]="salesOrderSoNoForm" (ngSubmit)="getSalesOrderBySoNo()">
+            <label for="firstname2" class="mr-2 text-lg font-bold">
+                <strong>SO. No: </strong>
+            </label>
+            <input type="text" pInputText formControlName="sono"/>
+            <p-button [loading]="sonoLoaded" type="submit" icon="pi pi-search" styleClass="p-button-warning mx-1"></p-button>
+        </form>
+    </div>
+</div>
+
+<hr *ngIf="!isSalesOrderInfoEmpty">
+
+<div *ngIf="!isSalesOrderInfoEmpty" >
+    <h4>S.O Details</h4>
+    <form [formGroup]="salesOrderForm">
+        <div class="formgrid grid">
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>SO. No: </strong>
+                </label>
+                <!-- | date: 'dd/MM/yyyy' -->
+                <label for="firstname2">{{orderInfo.SO_No}}</label>
+            </div>
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>Tel No: </strong>
+                </label>
+                <label for="firstname2">{{orderInfo.TelNo}}</label>
+            </div>
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>Customer Name: </strong>
+                </label>
+                <label for="firstname2">{{orderInfo.CustomerName}}</label>
+            </div>
+            <!--  -->
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>Delivery Type: <span class="text-red-500">*</span></strong>
+                </label>
+                <div>
+                    <p-radioButton name="groupname" [value]="'address'" formControlName="deliveryType" [(ngModel)]="deliveryType" nputId="address"></p-radioButton>
+                    <label class="mr-3" for="address">Address</label>
+                    <p-radioButton name="groupname" [value]="'personalPickup'" formControlName="deliveryType" [(ngModel)]="deliveryType" nputId="personalPickup"></p-radioButton>
+                    <label for="personalPickup">Personal Pickup</label>
+                </div>
+            </div>
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>Delivery Within: </strong>
+                </label>
+                <label *ngIf="orderInfo.DelivaryWithin != ''">{{orderInfo.DelivaryWithin}}</label>
+                <label *ngIf="orderInfo.DelivaryWithin == ''">N/A</label>
+            </div>
+            <!--  -->
+            <div *ngIf="this.salesOrderForm.get('deliveryType')!.value == 'address'" class="col-6 flex align-items-center mb-4">
+                <label for=""><strong>Address:<span class="text-red-500">*</span></strong></label>
+                <textarea pInputTextarea formControlName="address" [(ngModel)]="orderInfo.Address" cols="50" required></textarea>
+            </div>
+
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>City: <span class="text-red-500">*</span></strong>
+                </label>
+                <p-dropdown [options]="this.CitiesResponse.Cities" formControlName="city" optionLabel="Name" optionValue="Id" placeholder="Select a City"></p-dropdown>
+            </div>
+            <div class="col-6 flex align-items-center mb-4">
+                <label for="firstname2" class="mr-2 text-lg font-bold">
+                    <strong>Comment: </strong>
+                </label>
+                <textarea pInputTextarea formControlName="comment" [(ngModel)]="orderInfo.Comment" cols="50"></textarea>
+            </div>
+            <!--  -->
+
+        </div>
+    </form>
+</div>
+
+<p-table *ngIf="!isSalesOrderInfoEmpty" [value]="OrderDetails" responsiveLayout="scroll" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="item_code">Item Code<p-sortIcon field="item_code"></p-sortIcon></th>
+            <th pSortableColumn="item_desc">Item Desc<p-sortIcon field="item_desc"></p-sortIcon></th>
+            <th pSortableColumn="qty">Qty<p-sortIcon field="qty"></p-sortIcon></th>
+            <th pSortableColumn="soi_sys_id">Deliver<p-sortIcon field="soi_sys_id"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-OrderDetail>
+        <tr>
+            <td>{{OrderDetail.item_code}}</td>
+            <td>{{OrderDetail.item_desc}}</td>
+            <td>{{OrderDetail.qty}}</td>
+            <td>
+                <div>
+                    <p-checkbox name="delivered" [value]="OrderDetail.soi_sys_id" (onChange)="selectItem(OrderDetail.soi_sys_id, $event)" [(ngModel)]="selectedSoiSysId"></p-checkbox>
+                </div>
+            </td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex my-3">
+            <p-button *ngIf="!salesOrderForm.valid"  [disabled]="!salesOrderForm.valid" label="Procced to Dispatch" styleClass="p-button-warning mx-1"></p-button>
+            <p-button *ngIf="salesOrderForm.valid" [loading]="proceedDeliveryLoaded" (click)="confirm($event)" [disabled]="!salesOrderForm.valid" label="Procced to Dispatch" styleClass="p-button-warning mx-1"></p-button>
+        </div>
+    </ng-template>
+</p-table>
+
+
+

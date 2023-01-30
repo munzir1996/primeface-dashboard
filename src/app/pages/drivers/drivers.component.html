@@ -1,9 +1,14 @@
 <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<p-toast></p-toast>
 
 <div class="grid mt-2">
 	<div class="col-12">
 		<div class="card">
-			<h5>Drivers</h5>
+            <div class="flex justify-content-between">
+                <h5>Drivers</h5>
+                <!-- (click)="openCreateSalesOrderModal()" -->
+                <button (click)="openAddDriverModal()" pButton icon="pi pi-plus" class="p-button-rounded p-button-warning mb-3"></button>
+            </div>
 
             <div *ngIf="!driversLoaded"  class="col-12 custom-skeleton p-4">
                 <div class="flex mb-3">
@@ -34,6 +39,7 @@
 				</ng-template>
 
 				<ng-template let-driver pTemplate="listItem">
+
 					<div class="col-12">
 						<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
 							<img *ngIf="driver.DriverImage != 'NA'" [src]="apiImage + driver.DriverImage" [alt]="driver.DriverName" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
@@ -47,6 +53,7 @@
 							</div>
 						</div>
 					</div>
+
 				</ng-template>
 
 				<ng-template let-driver pTemplate="gridItem">
@@ -64,6 +71,7 @@
 							</div>
 						</div>
 					</div>
+
 				</ng-template>
 			</p-dataView>
 		</div>

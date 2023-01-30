@@ -1,0 +1,46 @@
+
+<!-- <p-confirmPopup></p-confirmPopup> -->
+<p-toast></p-toast>
+
+<form [formGroup]="driverForm" (ngSubmit)="addDriver()">
+    <div class="formgrid grid mt-1">
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="flex-auto mr-2 text-lg font-bold">
+                <strong>Driver Code: </strong>
+            </label>
+            <input type="number" pInputText formControlName="driverCode"/>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="flex-auto mr-2 text-lg font-bold">
+                <strong>Emp Code: </strong>
+            </label>
+            <input type="text" pInputText formControlName="empCode"/>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="flex-auto mr-2 text-lg font-bold">
+                <strong>Driver Name(EN): </strong>
+            </label>
+            <input type="text" pInputText formControlName="driverName"/>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="flex-auto mr-2 text-lg font-bold">
+                <strong>Driver Name(AR): </strong>
+            </label>
+            <input type="text" pInputText formControlName="driverNameAr"/>
+        </div>
+        <div class="col-6 flex align-items-center mb-4">
+            <label for="firstname2" class="flex-auto mr-2 text-lg font-bold">
+                <strong>Tel No: </strong>
+            </label>
+            <input type="text" pInputText formControlName="telNo"/>
+        </div>
+        <div class="col-12 flex align-items-center mb-4">
+            <p-button [loading]="isAddDriverLoaded" type="submit" styleClass="w-full p-button-warning mx-1">Create Driver</p-button>
+        </div>
+    </div>
+</form>
+
+
+
+
+

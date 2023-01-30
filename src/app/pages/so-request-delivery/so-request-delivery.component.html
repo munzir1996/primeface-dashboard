@@ -1,10 +1,14 @@
 <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<p-toast></p-toast>
 
 <div class="grid mt-2">
 
     <div class="col-12">
         <div class="card">
-            <h5>S.O Dispatched Orders</h5>
+            <div class="flex justify-content-between">
+                <h5>S.O Pending Delivery Requests</h5>
+                <button (click)="openCreateSalesOrderModal()" pButton icon="pi pi-plus" class="p-button-rounded p-button-warning mb-3"></button>
+            </div>
             <p-table #dt1 [value]="salesOrders" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
 
                 <!-- Search -->
@@ -71,7 +75,6 @@
                                         </p-multiSelect>
                                     </ng-template>
                                 </p-columnFilter>
-                                <!-- <p-columnFilter type="text" field="RequiestChanale" display="menu" placeholder="Search by Requested By"></p-columnFilter> -->
                             </div>
                         </th>
                         <th style="min-width: 12rem">
@@ -94,7 +97,6 @@
                                         </p-multiSelect>
                                     </ng-template>
                                 </p-columnFilter>
-                                <!-- <p-columnFilter type="text" field="CityName" display="menu" placeholder="Search by Requested By"></p-columnFilter> -->
                             </div>
                         </th>
                         <th style="min-width: 5rem">
@@ -110,73 +112,6 @@
                                 </p-columnFilter>
                             </div>
                         </th>
-                        <!--  -->
-                        <!-- <th style="min-width: 14rem">
-                            <div pSortableColumn="representative" class="flex justify-content-between align-items-center">
-                                Agent
-                                <p-sortIcon field="representative"></p-sortIcon>
-                                <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                    <ng-template pTemplate="header">
-                                        <div class="px-3 pt-3 pb-0">
-                                            <span class="font-bold">Agent Picker</span>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                            <ng-template let-option pTemplate="item">
-                                                <div class="p-multiselect-representative-option">
-                                                    <img [alt]="option.label" src="assets/demo/images/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
-                                                    <span class="ml-2">{{option.name}}</span>
-                                                </div>
-                                            </ng-template>
-                                        </p-multiSelect>
-                                    </ng-template>
-                                </p-columnFilter>
-                            </div>
-                        </th> -->
-                        <!-- <th pSortableColumn="date" style="min-width: 10rem">
-                            <div class="flex justify-content-between align-items-center">
-                                Date
-                                <p-sortIcon field="representative"></p-sortIcon>
-                                <p-columnFilter type="date" field="date" display="menu" placeholder="mm/dd/yyyy"></p-columnFilter>
-                            </div>
-                        </th> -->
-                        <!-- <th style="min-width: 10rem">
-                            <div class="flex justify-content-between align-items-center">
-                                Balance
-                                <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
-                            </div>
-                        </th> -->
-                        <!-- <th pSortableColumn="date" style="min-width: 12rem">
-                            <div class="flex justify-content-between align-items-center">
-                                Status
-                                <p-sortIcon field="status"></p-sortIcon>
-                                <p-columnFilter field="status" matchMode="equals" display="menu">
-                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{'min-width': '12rem'}" >
-                                            <ng-template let-option pTemplate="item">
-                                                <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                            </ng-template>
-                                        </p-dropdown>
-                                    </ng-template>
-                                </p-columnFilter>
-                            </div>
-                        </th> -->
-                        <!-- <th pSortableColumn="activity" style="min-width: 12rem">
-                            <div class="flex justify-content-between align-items-center">
-                                Activity
-                                <p-sortIcon field="activity"></p-sortIcon>
-                                <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                    <ng-template pTemplate="filter" let-filter="filterCallback">
-                                        <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)" styleClass="m-3" [style]="{'min-width': '12rem'}" ></p-slider>
-                                        <div class="flex align-items-center justify-content-between px-2">
-                                            <span>{{activityValues[0]}}</span>
-                                            <span>{{activityValues[1]}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-columnFilter>
-                            </div>
-                        </th> -->
                         <th style="min-width: 8rem">
                             <div class="flex justify-content-between align-items-center">
                                 Show
@@ -227,7 +162,7 @@
                 <!-- Empty Message -->
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="8">No S.O Dispatched Orders found.</td>
+                        <td colspan="8">No S.O Request Delivery Requests found.</td>
                     </tr>
                 </ng-template>
                 <!-- Empty Message -->
@@ -235,7 +170,7 @@
                 <!-- Loading -->
                 <ng-template pTemplate="loadingbody">
                     <tr>
-                        <td colspan="8">Loading S.O Dispatched Orders data. Please wait.</td>
+                        <td colspan="8">Loading S.O Request Delivery Requests data. Please wait.</td>
                     </tr>
                 </ng-template>
                 <!-- Loading -->

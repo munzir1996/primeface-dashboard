@@ -369,7 +369,7 @@ export class DriverDetailsComponent implements OnInit {
         });
 
         this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+            // this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
         });
     }
     openReceivedOrderDetails(order: OrderInfo) {
@@ -385,7 +385,7 @@ export class DriverDetailsComponent implements OnInit {
         });
 
         this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+            // this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
         });
     }
     openDeliveredOrderDetails(order: OrderInfo) {
@@ -401,7 +401,7 @@ export class DriverDetailsComponent implements OnInit {
         });
 
         this.ref.onMaximize.subscribe((value: any) => {
-            this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
+            // this.messageService.add({severity: 'info', summary: 'Maximized', detail:  `maximized: ${value.maximized}`});
         });
     }
 
