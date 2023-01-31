@@ -1,4 +1,4 @@
 
 export class ExtraInfo {
-    code: string;
+    code!: string;
 }

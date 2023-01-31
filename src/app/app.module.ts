@@ -60,12 +60,13 @@ import { SoRequestDeliveryModalComponent } from './modals/so-request-delivery-mo
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { AddDriverModalComponent } from './modals/add-driver-modal/add-driver-modal.component';
 import {GMapModule} from 'primeng/gmap';
+import { OrdersHeatMapComponent } from './pages/orders-heat-map/orders-heat-map.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent, SoRequestDeliveryModalComponent, AddDriverModalComponent
+        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent, SoRequestDeliveryModalComponent, AddDriverModalComponent, OrdersHeatMapComponent
     ],
     imports: [
         GMapModule,

@@ -1,0 +1,13 @@
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<p-toast></p-toast>
+
+<div class="grid mt-2">
+	<div class="col-12">
+		<div class="card">
+            
+            <p-gmap *ngIf="heatMapLoaded"  [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'550px'}" ></p-gmap>
+            <p-progressSpinner *ngIf="!heatMapLoaded" class="flex"></p-progressSpinner>
+            
+		</div>
+	</div>
+</div>

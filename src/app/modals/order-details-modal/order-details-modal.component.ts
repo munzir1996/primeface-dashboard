@@ -43,7 +43,9 @@ export class OrderDetailsModalComponent implements OnInit {
     initMap() {
 
         this.deliveryLoc = this.orderInfo.DeliveryLocation.split(",");
-
+        console.log('map');
+        console.log(this.deliveryLoc);
+        
         // this.heatmapData = [
         //     new google.maps.LatLng(37.782, -122.447),
         //     new google.maps.LatLng(37.782, -122.445),
@@ -72,7 +74,7 @@ export class OrderDetailsModalComponent implements OnInit {
             // center: {lat: 37.774546, lng: -122.433523},
             center: {lat: parseFloat(this.deliveryLoc[0]), lng: parseFloat(this.deliveryLoc[1])},
             zoom: 15,
-            mapTypeId: 'satellite'
+            // mapTypeId: 'satellite'
         };
     }   
 

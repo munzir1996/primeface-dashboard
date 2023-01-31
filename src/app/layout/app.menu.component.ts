@@ -39,6 +39,7 @@ export class AppMenuComponent implements OnInit {
                         { label: 'Drivers Returned Orders', icon: 'pi pi-fw pi-sync', routerLink: ['/drivers/returned/orders'] },
                         { label: 'S.O Pending Delivery Requests', icon: 'pi pi-fw pi-inbox', routerLink: ['/sopending/pending/delivery/requests'] },
                         { label: 'S.O Dispatched Orders', icon: 'pi pi-fw pi-truck', routerLink: ['/sodispatched/orders'] },
+                        { label: 'Heat Map', icon: 'pi pi-fw pi-compass', routerLink: ['/orders/heatmap'] },
                     ]
                 },
             ];

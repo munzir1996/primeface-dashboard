@@ -1,3 +1,4 @@
+import { DeliveredLocationsResponseModel } from './../../requests/HeatMap/DeliveredLocationsResponseModel';
 import { AddDriverResponseModel } from './../../requests/Driver/AddDriverResponseModel';
 import { AddDriverRequestModel } from './../../requests/Driver/AddDriverRequestModel';
 import { AddSalesOrderRequestModel } from './../../requests/GetSalesOrders/AddSalesOrderRequestModel';
@@ -45,6 +46,14 @@ export class DigiDeliveryApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
         };
+    }
+
+    public GetDeliveredLocations(): Observable<DeliveredLocationsResponseModel> {
+        return this.http.get<DeliveredLocationsResponseModel>(
+        apiURL + 'MgmtReports/GetDelevierdLocations',
+        {
+            headers: this.httpOptions
+        }).pipe(timeout(timeOutTime));
     }
 
     public GetPublicKey(): Observable<GetPublicKeyResponseModel> {
@@ -200,5 +209,6 @@ export class DigiDeliveryApiService {
           }).pipe(
             timeout(timeOutTime));
     }
+    
 
 }
