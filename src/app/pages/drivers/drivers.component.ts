@@ -13,8 +13,7 @@ import { FormBuilder } from '@angular/forms';
 import {DialogService} from 'primeng/dynamicdialog';
 import {MessageService} from 'primeng/api';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
-import { apiImage } from './../../../environments/environment'
-
+import { apiImage } from './../../../environments/environment';
 @Component({
   selector: 'app-drivers',
   templateUrl: './drivers.component.html',
@@ -36,7 +35,7 @@ export class DriversComponent implements OnInit {
     items!: MenuItem[];
     home!: MenuItem;
     ref!: DynamicDialogRef;
-
+    
     constructor(
         private productService: ProductService,
         private router: Router,

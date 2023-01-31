@@ -108,7 +108,7 @@
     <p-tabPanel header="Order Documents" leftIcon="pi pi-camera">
         <div class="grid">
             <!-- Delivery Note -->
-            <p-card class="col-4" header="Delivery Note">
+            <p-card class="col-6" header="Delivery Note">
                 <p-image *ngIf="orderInfo.OrderImage != ''" [preview]="true" [src]="apiImage + orderInfo.OrderImage" alt="Image" width="250">
                     <ng-template pTemplate="indicator">
                         <i class="pi pi-eye"></i>
@@ -121,7 +121,7 @@
                 </p-image>
             </p-card>
             <!-- Customer ID -->
-            <p-card class="col-4" header="Customer ID">
+            <p-card class="col-6" header="Customer ID">
                 <p-image *ngIf="orderInfo.CustomerIdImage != ''" [preview]="true" [src]="apiImage + orderInfo.CustomerIdImage" alt="Image" width="250" height="250">
                     <ng-template pTemplate="indicator">
                         <i class="pi pi-eye"></i>
@@ -133,7 +133,7 @@
                     </ng-template>
                 </p-image>
             </p-card>
-            <p-card class="col-4" header="Customer Signature">
+            <p-card class="col-6" header="Customer Signature">
                 <p-image *ngIf="orderInfo.CustomerSignature != ''" [preview]="true" [src]="apiImage + orderInfo.CustomerSignature" alt="Image" width="250" height="250">
                     <ng-template pTemplate="indicator">
                         <i class="pi pi-eye"></i>
@@ -149,12 +149,8 @@
     </p-tabPanel>
 
     <p-tabPanel header="Map" leftIcon="pi pi-map-marker">
-        map
-        <ejs-maps id='rn-container' (load)="load($event)" style="display:block">
-            <e-layers>
-           <e-layer></e-layer>
-           </e-layers>
-        </ejs-maps>
+        <p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}" ></p-gmap>
+        <!-- <p-gmap [options]="options" [style]="{'width':'100%','height':'320px'}" ></p-gmap> -->
     </p-tabPanel>
 </p-tabView>
 

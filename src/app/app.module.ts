@@ -59,7 +59,7 @@ import { SoRequestDeliveryComponent } from './pages/so-request-delivery/so-reque
 import { SoRequestDeliveryModalComponent } from './modals/so-request-delivery-modal/so-request-delivery-modal.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { AddDriverModalComponent } from './modals/add-driver-modal/add-driver-modal.component';
-import { GridAllModule } from '@syncfusion/ej2-angular-grids'; 
+import {GMapModule} from 'primeng/gmap';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -68,6 +68,7 @@ registerLocaleData(localeEn, 'en-EN');
         AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent, SoRequestDeliveryModalComponent, AddDriverModalComponent
     ],
     imports: [
+        GMapModule,
         FormsModule,
         ReactiveFormsModule ,
         AppRoutingModule,
@@ -103,7 +104,6 @@ registerLocaleData(localeEn, 'en-EN');
         CheckboxModule,
         ConfirmPopupModule,
         InputTextareaModule,
-        GridAllModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
