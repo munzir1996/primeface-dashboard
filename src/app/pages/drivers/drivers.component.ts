@@ -5,8 +5,8 @@ import { UserInfoModel } from './../../models/Common/UserInfoModel';
 import { DriverInfo } from './../../models/Drivers/DriverInfo';
 import { Component, OnInit } from '@angular/core';
 import { DataView } from 'primeng/dataview';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+// import { Product } from 'src/app/demo/api/product';
+// import { ProductService } from 'src/app/demo/service/product.service';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import { FormBuilder } from '@angular/forms';
@@ -22,7 +22,6 @@ import { apiImage } from './../../../environments/environment';
 })
 export class DriversComponent implements OnInit {
 
-    products: Product[] = [];
     sortOrder: number = 0;
     sortField: string = '';
     driversLoaded: boolean = false;
@@ -35,9 +34,9 @@ export class DriversComponent implements OnInit {
     items!: MenuItem[];
     home!: MenuItem;
     ref!: DynamicDialogRef;
-    
+
     constructor(
-        private productService: ProductService,
+        // private productService: ProductService,
         private router: Router,
         private appService: AppService,
         private formBuilder: FormBuilder,

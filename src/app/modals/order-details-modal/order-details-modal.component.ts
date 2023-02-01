@@ -1,7 +1,7 @@
 import { OrderInfo } from './../../models/Order/OrderInfo';
 // import { OrderInfo } from './../../models/OrderInfo/OrderInfo';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
+// import { Product } from 'src/app/demo/api/product';
 
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {DynamicDialogConfig} from 'primeng/dynamicdialog';
@@ -33,9 +33,9 @@ export class OrderDetailsModalComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        
+
         this.orderInfo = this.config.data.orderInfo
-        
+
         this.initMap();
 
     }
@@ -45,7 +45,7 @@ export class OrderDetailsModalComponent implements OnInit {
         this.deliveryLoc = this.orderInfo.DeliveryLocation.split(",");
         console.log('map');
         console.log(this.deliveryLoc);
-        
+
         // this.heatmapData = [
         //     new google.maps.LatLng(37.782, -122.447),
         //     new google.maps.LatLng(37.782, -122.445),
@@ -76,6 +76,6 @@ export class OrderDetailsModalComponent implements OnInit {
             zoom: 15,
             // mapTypeId: 'satellite'
         };
-    }   
+    }
 
 }

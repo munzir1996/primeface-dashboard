@@ -9,8 +9,8 @@ import { DriverInfo } from './../../models/Drivers/DriverInfo';
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { SelectItem, PrimeNGConfig} from 'primeng/api';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+// import { Product } from 'src/app/demo/api/product';
+// import { ProductService } from 'src/app/demo/service/product.service';
 import { DataView } from 'primeng/dataview';
 import { OrderDetailsModalComponent } from 'src/app/modals/order-details-modal/order-details-modal.component';
 import {DialogService} from 'primeng/dynamicdialog';
@@ -90,7 +90,7 @@ export class DriverDetailsComponent implements OnInit {
     locations!: LocationModel[];
 
     constructor(
-        private productService: ProductService,
+        // private productService: ProductService,
         private primengConfig: PrimeNGConfig,
         public dialogService: DialogService,
         public messageService: MessageService,

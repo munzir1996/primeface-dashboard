@@ -7,8 +7,8 @@ import { DriverInfo } from './../../models/Drivers/DriverInfo';
 import { OrderInfo } from './../../models/Order/OrderInfo';
 import { Component, OnInit } from '@angular/core';
 import { DataView } from 'primeng/dataview';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+// import { Product } from 'src/app/demo/api/product';
+// import { ProductService } from 'src/app/demo/service/product.service';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import {DialogService} from 'primeng/dynamicdialog';
@@ -67,7 +67,7 @@ export class DriversPickedOrdersComponent implements OnInit {
     ref!: DynamicDialogRef;
 
     constructor(
-        private productService: ProductService,
+        // private productService: ProductService,
         private primengConfig: PrimeNGConfig,
         public dialogService: DialogService,
         public messageService: MessageService,

@@ -9,7 +9,7 @@ import { SalesOrderInfoDetailModel } from './../../models/SalesOrders/SalesOrder
 import { SalesOrderInfoModel } from './../../models/SalesOrders/SalesOrderInfoModel';
 import { Component, OnInit } from '@angular/core';
 import { OrderInfo } from './../../models/Order/OrderInfo';
-import { Product } from 'src/app/demo/api/product';
+// import { Product } from 'src/app/demo/api/product';
 
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {DynamicDialogConfig} from 'primeng/dynamicdialog';

@@ -4,8 +4,8 @@ import { DigiDeliveryApiService } from './../../utils/services/digi-delivery-api
 import { UserInfoModel } from './../../models/Common/UserInfoModel';
 import { DriverInfo } from './../../models/Drivers/DriverInfo';
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+// import { Product } from 'src/app/demo/api/product';
+// import { ProductService } from 'src/app/demo/service/product.service';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import { FormBuilder } from '@angular/forms';
@@ -24,7 +24,7 @@ import {GMapModule} from 'primeng/gmap';
 })
 export class OrdersHeatMapComponent implements OnInit {
 
-    products: Product[] = [];
+    // products: Product[] = [];
     sortOrder: number = 0;
     sortField: string = '';
     heatMapLoaded: boolean = false;
@@ -47,7 +47,7 @@ export class OrdersHeatMapComponent implements OnInit {
     heatMapPins!: any[];
 
     constructor(
-        private productService: ProductService,
+        // private productService: ProductService,
             private router: Router,
             private appService: AppService,
             private formBuilder: FormBuilder,
@@ -75,12 +75,12 @@ export class OrdersHeatMapComponent implements OnInit {
             next: (response) => {
                 if (response.Error.ErrorCode == "200") {
                     this.delevierdLocations = response.delevierdLocations;
-                    
+
                     this.heatMapPins = this.delevierdLocations.map((delevierdLocation) => {
                         let deliveryLoc = delevierdLocation.Location.split(",");
                         return new google.maps.LatLng({lat: parseFloat(deliveryLoc[0]), lng: parseFloat(deliveryLoc[1])})
                     });
-                    
+
                     this.heatmapData = this.heatMapPins;
 
                     this.overlays = [
@@ -106,8 +106,8 @@ export class OrdersHeatMapComponent implements OnInit {
             },
         })
 
-        
-    }  
+
+    }
 
     getDeliveredLocations() {
 
@@ -115,7 +115,7 @@ export class OrdersHeatMapComponent implements OnInit {
             next: (response) => {
                 if (response.Error.ErrorCode == "200") {
                     this.delevierdLocations = response.delevierdLocations;
-                    
+
                     this.initMap();
                 } else {
                     this.messageService.add({severity:'error', summary: 'Heat Map', detail: response.Error.ErrorMessage, life: 3000});

@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 import { SalesOrderModel } from './../../models/SalesOrders/SalesOrderModel';
 import { LoginResponseModel } from './../../requests/Account/LoginResponseModel';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
+// import { Customer, Representative } from 'src/app/demo/api/customer';
+// import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {MenuItem} from 'primeng/api';
@@ -38,8 +38,8 @@ export class SoDispatchedOrdersComponent implements OnInit {
     //
     items!: MenuItem[];
     home!: MenuItem;
-    customers1: Customer[] = [];
-    representatives: Representative[] = [];
+    // customers1: Customer[] = [];
+    // representatives: Representative[] = [];
     statuses: any[] = [];
     activityValues: number[] = [0, 100];
     loading: boolean = true;

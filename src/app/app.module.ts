@@ -3,14 +3,6 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
-import { NotfoundComponent } from './demo/components/notfound/notfound.component';
-import { ProductService } from './demo/service/product.service';
-import { CountryService } from './demo/service/country.service';
-import { CustomerService } from './demo/service/customer.service';
-import { EventService } from './demo/service/event.service';
-import { IconService } from './demo/service/icon.service';
-import { NodeService } from './demo/service/node.service';
-import { PhotoService } from './demo/service/photo.service';
 import { DriversComponent } from './pages/drivers/drivers.component';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
@@ -61,12 +53,16 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { AddDriverModalComponent } from './modals/add-driver-modal/add-driver-modal.component';
 import {GMapModule} from 'primeng/gmap';
 import { OrdersHeatMapComponent } from './pages/orders-heat-map/orders-heat-map.component';
-
+import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent, DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent, SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent, SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent, SoRequestDeliveryModalComponent, AddDriverModalComponent, OrdersHeatMapComponent
+        NotfoundComponent, AppComponent, DriversComponent, DriverDetailsComponent, OrderDetailsModalComponent, DriversPendingOrdersComponent,
+        DriversPickedOrdersComponent, DriversDeliveredOrdersComponent, DriversReturnedOrdersComponent,
+        SoPendingDeliveryRequestsComponent, SoDispatchedOrdersComponent, LoginComponent,
+        SoPendingDeliveryModalComponent, SoDispatchedOrdersModalComponent, SoRequestDeliveryComponent,
+        SoRequestDeliveryModalComponent, AddDriverModalComponent, OrdersHeatMapComponent
     ],
     imports: [
         GMapModule,
@@ -108,8 +104,7 @@ registerLocaleData(localeEn, 'en-EN');
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, DatePipe
+        DatePipe
     ],
     bootstrap: [AppComponent, DatePipe]
 })
